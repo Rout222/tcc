@@ -1,39 +1,21 @@
 \chapter{Metodologia}
-
-Para a realização do projeto, é necessário antes explicar as tecnologias usadas, e o por quê foram usadas. A primeira seção irá explicar como os dados estão disponíveis e de que informações eles carregam.  A segunda fala sobre a linguagem de programação utilizada para conseguir os dados, verificar se os dados estão completos, e armazena-los em um banco de dados. A terceira clarifica o que é um banco de dados, e porque foi utilizado.
+Este capítulo apresenta as ferramentas e algoritmos utilizados neste projeto tanto no processo de extração do conhecimento, quanto na visualização dos dados.
+A primeira seção irá explicar como os dados estão disponíveis e de que informações eles carregam.  A segunda fala sobre a linguagem de programação utilizada para conseguir os dados, verificar se os dados estão completos, e armazena-los em um banco de dados. A terceira clarifica o que é um banco de dados, e porque foi utilizado.
 
 \section{API do \textit{league of legends}}
+
 A \textit{Riot Games}, desenvolvedora e dono do jogo \textit{League of Legends}, fornece uma Interface de Programação de Aplicativos ( do inglês \textit{Application Programming Interface} ) ou chamado de API para que terceiros consigam acessar dados sobre os jogos.
 
-Para conseguir ter acesso à essa API, é necessário se cadastrar, entrar no \textit{site} na parte de desenvolvedores, disponível em http://developer.riotgames.com ( não sei se pode por link assim ).  Depois de cadastrado e de se credenciar no \textit{site}, deve ser clicado no botão para gerar uma chave API, que é válida por apenas alguns dias, a menos que cadastre o projeto, dessa maneira a chave é válida por um ano.
-
+A Riot games disponibiliza o acesso as informações de partir à patir da URL\footnote{http://developer.riotgames.com} de modo que é gerado uma chave válida por 1 ano para projetos cadastrados.
 O acesso à essa API é por URL utilizando uma função disponível pela \textit{RIOT Games}. Neste trabalho, usaremos apenas a função \textit{MATCH-V3}, que é uma função que retorna os dados de uma partida já terminada.
+
 Nas próximas subseções serão abordados o formato no qual a API disponibiliza os dados, e quais informações ela retorna com o uso do \textit{MATCH-V3} e quais serão usados no projeto.
-\subsection{JSON}
-(preciso achar outros autores para respaldarem)
-
-A API do \textit{League of Legends} disponibiliza as informações no formato de Notação de Objeto JavaScript ( do inglês \textit{ JavaScript Object Notation.} ) ou JSON.
-O JSON é um formato de dados que é escrito em forma de texto. O padrão JSON é um jeito de escrever as informações casando o nome das variáveis com um valor, ou em uma lista ordenada de valores. E o objeto em JSON é uma lista desordenada de valores \citep{json2}.
- 
- 
-Segundo o \citeauthor{json2} "JSON [...] é uma formatação leve de troca de dados. Para seres humanos, é fácil de ler e escrever. Para máquinas, é fácil de interpretar e gerar." e continua explicando "JSON é em formato texto e completamente independente de linguagem, pois usa convenções que são familiares às linguagens C e familiares [...]. Estas propriedades fazem com que JSON seja um formato ideal de troca de dados."
-
-\begin{figure}[!ht]
-	\caption{Representação visual de um objeto em JSON}
-	\begin{center}
-		\includegraphics[width=15cm]{imagens/json.jpg}
-	\end{center}
-	\small{Fonte: \cite{json2}.}
-	\label{fig:Json}
-\end{figure}
- 
 
 \subsection{MATCH-V3}
 
-A função \textit{MATCH-V3} é disponibilizada publicamente pela \textit{RIOT Games} e que retorna um conjunto de informações no formato JSON sobre a partida passada por parâmetro, quando essa partida existe no banco de dados da \textit{RIOT Games}. A Figura \ref{fig:match-v3} resume um exemplo de acesso utilizando a função acessando a URL  
-\(https://br1.api.riotgames.com/lol/match/v3/matches/1381102031?api\_key=minhachave\) acessada em 21 de março de 2018, sendo que \(minhachave\) tem que ser substituída por uma chave privada válida.
-\begin{figure}[!ht]
-	\caption{Exemplo de retorno do uso da função \textit{MATCH-V3}}
+A função \textit{MATCH-V3} é disponibilizada publicamente pela \textit{RIOT Games} e que retorna um conjunto de informações no formato JSON sobre a partida passada por parâmetro, quando essa partida existe no banco de dados da \textit{RIOT Games}. A Figura \ref{fig:match-v3} resume um exemplo de acesso utilizando a função acessando a URL\footnote{https://br1.api.riotgames.com/lol/match/v3/matches/1381102031?api\_key=minhachave} acessada em 21 de março de 2018, sendo que \(minhachave\) tem que ser substituída por uma chave privada válida.
+\begin{figure}[H]
+	\caption{Exemplo de retorno do uso da função \textit{MATCH-V3}. Sendo as informações divididas em informações da partida, informações dos times, e informações dos participantes.}
 	\begin{center}
 		\includegraphics[width=9cm]{imagens/match-v3.jpg}
 	\end{center}
@@ -42,7 +24,8 @@ A função \textit{MATCH-V3} é disponibilizada publicamente pela \textit{RIOT G
 \end{figure}
 
 De todas essas informações retornadas pela função, as informações armazenadas para o projeto por participante são:
-\begin{itemize}
+
+\begin{enumerate}
 \item \textit{gameId}. Identificador único da partida;
 \item \textit{kills}, \textit{deaths} e \textit{assists}. Informações que falam, respectivamente, quantas vezes esse jogador matou, morreu e participou na morte de outrem;
 \item \textit{win}. Se ele ganhou;
@@ -50,15 +33,25 @@ De todas essas informações retornadas pela função, as informações armazena
 \item \textit{lane}. Em qual posição ele tava jogando;
 \item \textit{platformId}. Em qual servidor ele jogava;
 \item \textit{queueId}. E qual o tipo de partida.
-\end{itemize}
+\end{enumerate}
 
-Sabendo qual informação vamos armazenar, ficou escolhido a linguagem \textit{Python} para ser desenvolvido o algoritmo no qual obterá as informações de forma não manual e o sistema de gerenciamento de banco de dados MySQL. Na próxima seção será apresentado sobre banco de dados e na seção \ref{section:python} será esclarecido o que é linguagem de programação \textit{Python} e como foi usado. 
+Sabendo qual informação vamos armazenar, ficou escolhido a linguagem \textit{Python} para ser desenvolvido o algoritmo no qual obterá as informações de forma não manual e o sistema de gerenciamento de banco de dados MySQL. Na próxima seção será apresentado sobre banco de dados e na seção \ref{section:get} será esclarecido como foram obtidos o \textit{dataset} das partidas. 
 
 
 \section{Banco de Dados}
-(continua)
-\section{\textit{Python}}
-\label{section:python}
+
+\begin{figure}[H]
+	\caption{Esquema do Banco de Dados.}
+	\begin{center}
+		\includegraphics[width=17cm]{imagens/esquema.png}
+	\end{center}
+	\small{Fonte: Autor.}
+	\label{fig:novafigura}
+\end{figure}
+
+
+\section{Conseguindo os dados}
+\label{section:get}
 \textit{Python} é uma linguagem de programação dentre muitas, assim como existem várias linguagens faladas e escritas por nós humanos, no mundo da computação, existem várias linguagens de programação, onde geralmente cada uma se destaca em pelo menos um quesito. 
 
 (pegar algum autor para respaldar, e pegar algum texto dele falando sobre vantagens do \textit{Python}, que é interpretado e continua.)
@@ -75,7 +68,7 @@ O aplicativo verifica se a partida requisitada existe e se os dados necessários
    \SetAlgoLined
      \Inicio{
 
-		i = 1000000000; /* Esta é a \textit{id} de uma partida aleatória na ultima versão do jogo*/
+		i = 1000000000;\tcp*[f]{Esta é a \textit{id} de uma partida aleatória na ultima versão do jogo}
             
 		chave = minha chave privada de acesso;
             
@@ -84,8 +77,9 @@ O aplicativo verifica se a partida requisitada existe e se os dados necessários
         }
         \Repita{Até ser pausado}{    
             pedido = requisita URL Da API(i, chave);
-            
-            \uSe{pedido.status == 200}{ /* se a partida existe */
+
+            \Se((\tcp*[f]{Se a partida existe}){pedido.status == 200 }{
+            	 
             	JSON = carrega JSON Do Pedido(pedido);
                 
                 \uSe{JSON é válido}{
@@ -93,10 +87,11 @@ O aplicativo verifica se a partida requisitada existe e se os dados necessários
                 }
                 
                 i = i + 1;
-                
-                Salva i no arquivo;
+
             }
 		}
+	                
+	Salva i no arquivo;
     }
    \label{alg:main-aqui}
    \caption{\textsc{Aquisição dos dados das partidas}}
@@ -127,48 +122,90 @@ match\_id  & kills & deaths & assists & win & champ\_id & lane   & player\_id & 
 \small{Fonte: Autor.}
 \end{table}
 
-Com esse número de partidas, foi feito um outro \textit{software}, para processamento dos dados, onde é contabilizado quantas vezes cada campeão jogou com outro campeão, seja no mesmo time ou no time adversário, calculado quantas vitória contra, e com o outro herói. Na tabela \ref{tab:matriz-subset} é possível ver um exemplo de como a estrutura fica apos o processamento dos dados, sendo \textit{id}, o identificador de cada campeão, e vj, vc, nj e nc sendo respectivamente as vitórias juntos, vitórias contra, número de jogos juntos, números de jogos contra.
+Na etapa seguinte são contabilizados quantas vezes cada campeão jogou com outro campeão, seja no mesmo time ou no time adversário, calculado quantas vitória contra, e com o outro herói.
+E com as informações já processados, foi montado um \textit{web service}, que sera explicado na secão \ref{chap:web}, para uma melhor visualização dos dados obtidos utilizando uma biblioteca chamada D3.js, que será explicado na próxima seção.
 
-\begin{table}[H]
-\centering
-\caption{Exemplo da matriz gerada apos o processamento dos dados}
-\label{tab:subset-lol}
-\label{tab:matriz-subset}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}|c|c|c|c|c|c|c|c|c|c|c|c|c|c|@{}}
-\toprule
-\multicolumn{2}{|c|}{\multirow{2}{*}{id x id}} & \multicolumn{4}{c|}{1}                 & \multicolumn{4}{c|}{2}                                                              & \multicolumn{4}{c|}{3}                                                                \\ \cmidrule(l){3-14} 
-\multicolumn{2}{|c|}{}                         & vj       & vc      & nj      & nc      & vj                 & vc                 & nj                  & nc                  & vj                  & vc                  & nj                  & nc                  \\ \midrule
-\multirow{4}{*}{1}             & vj            & \multicolumn{4}{c|}{\multirow{4}{*}{}} & \multirow{4}{*}{7} & \multirow{4}{*}{3} & \multirow{4}{*}{13} & \multirow{4}{*}{11} & \multirow{4}{*}{11} & \multirow{4}{*}{23} & \multirow{4}{*}{17} & \multirow{4}{*}{33} \\ \cmidrule(lr){2-2}
-                               & vc            & \multicolumn{4}{c|}{}                  &                    &                    &                     &                     &                     &                     &                     &                     \\ \cmidrule(lr){2-2}
-                               & nj            & \multicolumn{4}{c|}{}                  &                    &                    &                     &                     &                     &                     &                     &                     \\ \cmidrule(lr){2-2}
-                               & nc            & \multicolumn{4}{c|}{}                  &                    &                    &                     &                     &                     &                     &                     &                     \\ \midrule
-\multirow{4}{*}{2}             & vj            & \multicolumn{4}{c|}{7}                 & \multicolumn{4}{c|}{\multirow{4}{*}{}}                                              & \multirow{4}{*}{5}  & \multirow{4}{*}{8}  & \multirow{4}{*}{9}  & \multirow{4}{*}{11} \\ \cmidrule(lr){2-6}
-                               & vc            & \multicolumn{4}{c|}{8}                 & \multicolumn{4}{c|}{}                                                               &                     &                     &                     &                     \\ \cmidrule(lr){2-6}
-                               & nj            & \multicolumn{4}{c|}{13}                & \multicolumn{4}{c|}{}                                                               &                     &                     &                     &                     \\ \cmidrule(lr){2-6}
-                               & nc            & \multicolumn{4}{c|}{11}                & \multicolumn{4}{c|}{}                                                               &                     &                     &                     &                     \\ \midrule
-\multirow{4}{*}{3}             & vj            & \multicolumn{4}{c|}{11}                & \multicolumn{4}{c|}{5}                                                              & \multicolumn{4}{c|}{\multirow{4}{*}{}}                                                \\ \cmidrule(lr){2-10}
-                               & vc            & \multicolumn{4}{c|}{10}                & \multicolumn{4}{c|}{3}                                                              & \multicolumn{4}{c|}{}                                                                 \\ \cmidrule(lr){2-10}
-                               & nj            & \multicolumn{4}{c|}{17}                & \multicolumn{4}{c|}{9}                                                              & \multicolumn{4}{c|}{}                                                                 \\ \cmidrule(lr){2-10}
-                               & nc            & \multicolumn{4}{c|}{33}                & \multicolumn{4}{c|}{11}                                                             & \multicolumn{4}{c|}{}                                                                 \\ \bottomrule
-\end{tabular}%
-}
-\small{Fonte: Autor.}
-\end{table}
+\section{D3.js}
+A biblioteca D3.js, é uma biblioteca em JavaScript, especializada em dar vida aos dados. Segundo \citet{d3cook} "Em certo sentido, o D3 é uma biblioteca JavaScript especializada que permite criar incríveis
+visualizações de dados usando uma abordagem mais simples (baseada em dados), aproveitando os padrões da Web existentes", e a organização oficial diz :
 
-E com as informações já processados, foi montado um \textit{webapp}, que sera explicado na proxima secão, para uma melhor visualização dos dados obtidos.
 
-\section{\textit{webapp}}
+\begin{quote}
+O D3.js é uma biblioteca em JavaScript para manipulação de documentos por dados. D3 te ajuda a trazer vida para os dados utilizando HTML, SVG e CSS. A enfase da biblioteca D3 nos padrões da \textit{web} dá-lhe todos os recursos dos navegadores modernos sem te prender a um \textit{framework} propietário, combinando poderosos componentes de visualização e uma aproximacão orientada por dados da manipulação do DOM.
+\cite[tradução nossa]{d3js}
+\end{quote}
 
-(continua...)
 
-Com essa aplicação, é possível visualizar o resultado de todos os dados no banco de dados ou diminuir o escopo, filtrando alguns dados. Na figura \ref{fig:webapp} é possível ver um exemplo
+Com essa biblioteca, é possível dar vida à informações e dados como por exemplo a Figura \ref{fig:d3}, duas das diversas maneiras de se exibir informações com o D3.js. E com o D3 foi gerado o grafo do \textit{web service} que sera melhor explicado na seção seguinte.
 
-\begin{figure}[h]
-	\caption{Exemplo do uso do \textit{WEBAPP}}
+\begin{figure}[H]
+	\caption{Exemplo de visualização de dados utilizando o D3.js.}
 	\begin{center}
-		\includegraphics[width=12cm]{imagens/webservice.jpg}
+		\includegraphics[width=7.5cm]{imagens/d3_1.png}%
+		\hspace{1cm}% add some horizontal spacing
+		\includegraphics[width=7.5cm]{imagens/d3_2.PNG}%
 	\end{center}
-	\small{Fonte: Autor.}
-	\label{fig:webapp}
+	\small{Fonte: \cite{d3js}.}
+	\label{fig:d3}
 \end{figure}
+
+
+\section{\textit{web service}}
+\label{chap:web}
+
+O \textit{web service}, foi criado utilizando o \textit{framework} Flask, que como \citet[tradução nossa]{flask} diz "Flask é um micro \textit{framework} para Python baseado em Werkzeug, Jinja 2 e em boas intenções.".
+
+Com essa serviço, será possível um relatório geral, onde ele consegue ver quais campeões são melhores contra e com quais, consegue filtrar quais campeões podem participar da pesquisa, e quais não podem. 
+
+Nas figuras \ref{fig:web_service_relatorio} é possível ver um exemplo de uso do serviço para uma visão geral das informações. E na Figura \ref{fig:web_service_predict} é possível ver o uso da ferramenta para predição de uma batalha. Na seção \ref{chap:pred} será melhor abordado a maneira que essa predição é feita.
+
+
+
+\begin{figure}[H]
+	
+	\centering
+	\caption{Exemplo de uso do \textit{web service} para visão geral dos dados.}
+	\subfloat[Filtro partida para campeões da mesma equipe]{
+		\includegraphics[width=0.4\textwidth]{imagens/web_1.JPG}
+		}
+	\subfloat[Filtro para numero de partidas para adversários]{
+		\includegraphics[width=0.4\textwidth]{imagens/web_2.JPG}
+		}
+	\qquad
+	\subfloat[Filtro para escolher quais campeões podem participar (\textit{picks}), e quais nao podem (\textit{bans})]{
+		\includegraphics[width=0.4\textwidth]{imagens/web_3.JPG}
+	}
+	\subfloat[Exemplo de grafo exibido pelo \textit{web service}, sendo as setas vermelhas mostrando quem é bom contra quem, e as linhas continuas quem é bom com quem, e o tamanho do circulo é a frequência daquela ligação, e a cor a força da ligação]{
+		\includegraphics[width=0.4\textwidth]{imagens/web_4.JPG}
+	}
+
+	\small{Fonte: Autor.}
+	\label{fig:web_service_relatorio}
+\end{figure}
+
+\begin{figure}[H]
+	
+	\centering
+	\caption{Exemplo de uso do \textit{web service} predição da partida.}
+	\subfloat[Esperando ser feito]{
+		\rule{7cm}{7cm}
+	}
+	\subfloat[Esperando ser feito]{
+		\rule{7cm}{7cm}
+	}
+	\qquad
+	\subfloat[Esperando ser feito]{
+		\rule{7cm}{7cm}
+	}
+	\subfloat[Esperando ser feito]{
+		\rule{7cm}{7cm}
+	}
+
+
+	\small{Fonte: Autor.}
+	\label{fig:web_service_predict}
+\end{figure}
+
+\section{Predição dos dados}
+\label{chap:pred}
+Como ainda não conseguimos dados suficiente, não chegamos até aqui.
