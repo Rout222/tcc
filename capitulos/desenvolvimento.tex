@@ -1,21 +1,17 @@
 \chapter{Metodologia}
 Este capítulo apresenta as ferramentas e algoritmos utilizados neste projeto tanto no processo de extração do conhecimento, quanto na visualização dos dados.
-A primeira seção irá explicar como os dados estão disponíveis e de que informações eles carregam.  A segunda fala sobre a linguagem de programação utilizada para conseguir os dados, verificar se os dados estão completos, e armazena-los em um banco de dados. A terceira clarifica o que é um banco de dados, e porque foi utilizado.
+A primeira seção irá explicar como os dados estão disponíveis e de que informações eles carregam. A segunda clarifica o que é um banco de dados, e porque foi utilizado.  A terceira fala de que maneira se consegue os dados, verifica se os dados estão completos e armazena-os em um banco de dados.
 
 \section{API do \textit{league of legends}}
 
-A \textit{Riot Games}, desenvolvedora e dono do jogo \textit{League of Legends}, fornece uma Interface de Programação de Aplicativos ( do inglês \textit{Application Programming Interface} ) ou chamado de API para que terceiros consigam acessar dados sobre os jogos.
+A Riot Games, desenvolvedora e dono do jogo \textit{League of Legends}, fornece uma Interface de Programação de Aplicativos ( do inglês \textit{Application Programming Interface} ) ou chamado de API, para que terceiros consigam acessar dados sobre os jogos.
 
-A Riot games disponibiliza o acesso as informações de partir à patir da URL\footnote{http://developer.riotgames.com} de modo que é gerado uma chave válida por 1 ano para projetos cadastrados.
-O acesso à essa API é por URL utilizando uma função disponível pela \textit{RIOT Games}. Neste trabalho, usaremos apenas a função \textit{MATCH-V3}, que é uma função que retorna os dados de uma partida já terminada.
+A Riot games disponibiliza o acesso as informações à patir da URL\footnote{http://developer.riotgames.com} de modo que é gerado uma chave válida por 1 ano para projetos cadastrados.
+O acesso à essa API é por URL utilizando uma função disponível pela Riot Games. Neste trabalho, usaremos apenas a função \textit{MATCH-V3} que é uma função que retorna os dados de uma partida já terminada.
 
-Nas próximas subseções serão abordados o formato no qual a API disponibiliza os dados, e quais informações ela retorna com o uso do \textit{MATCH-V3} e quais serão usados no projeto.
-
-\subsection{MATCH-V3}
-
-A função \textit{MATCH-V3} é disponibilizada publicamente pela \textit{RIOT Games} e que retorna um conjunto de informações no formato JSON sobre a partida passada por parâmetro, quando essa partida existe no banco de dados da \textit{RIOT Games}. A Figura \ref{fig:match-v3} resume um exemplo de acesso utilizando a função acessando a URL\footnote{https://br1.api.riotgames.com/lol/match/v3/matches/1381102031?api\_key=minhachave} acessada em 21 de março de 2018, sendo que \(minhachave\) tem que ser substituída por uma chave privada válida.
+A função \textit{MATCH-V3} é disponibilizada publicamente pela Riot Games, retornando um conjunto de informações no formato JSON sobre a partida passada por parâmetro, quando essa partida existe. A Figura \ref{fig:match-v3} resume um exemplo de uso da função acessando a URL\footnote{https://br1.api.riotgames.com/lol/match/v3/matches/1381102031?api\_key=minhachave}, acessada em 21 de março de 2018 pelo autor, sendo que \(minhachave\) tem que ser substituída por uma chave privada válida.
 \begin{figure}[H]
-	\caption{Exemplo de retorno do uso da função \textit{MATCH-V3}. Sendo as informações divididas em informações da partida, informações dos times, e informações dos participantes.}
+	\caption{Exemplo de retorno do uso da função \textit{MATCH-V3}. Sendo as informações divididas em informações da partida, informações dos times e informações dos participantes.}
 	\begin{center}
 		\includegraphics[width=9cm]{imagens/match-v3.jpg}
 	\end{center}
@@ -23,7 +19,7 @@ A função \textit{MATCH-V3} é disponibilizada publicamente pela \textit{RIOT G
 	\label{fig:match-v3}
 \end{figure}
 
-De todas essas informações retornadas pela função, as informações armazenadas para o projeto por participante são:
+De todas essas informações retornadas pela função, as que foram armazenadas para o projeto por participante são:
 
 \begin{enumerate}
 \item \textit{gameId}. Identificador único da partida;
@@ -52,13 +48,11 @@ Sabendo qual informação vamos armazenar, ficou escolhido a linguagem \textit{P
 
 \section{Conseguindo os dados}
 \label{section:get}
-\textit{Python} é uma linguagem de programação dentre muitas, assim como existem várias linguagens faladas e escritas por nós humanos, no mundo da computação, existem várias linguagens de programação, onde geralmente cada uma se destaca em pelo menos um quesito. 
+\textit{Python} é uma linguagem de programação dentre muitas, assim como existem várias linguagens faladas e escritas por nós humanos, existem várias linguagens de programação onde geralmente cada uma se destaca em pelo menos um quesito. 
 
-(pegar algum autor para respaldar, e pegar algum texto dele falando sobre vantagens do \textit{Python}, que é interpretado e continua.)
+Com isso, foi criado um algoritmo para a aquisição dos dados de partidas pela API do \textit{League of Legends} em \textit{Python}, que usa a biblioteca \textit{requests} para conseguir acessar a API por URL's, e a biblioteca json para transformar o JSON retornado pela requisição da URL em um objeto em \textit{Python}.
 
-Entendendo isso, foi criado um algoritmo para a aquisição dos dados de partidas pela API do \textit{League of Legends}, que usava a biblioteca \textit{requests} do \textit{Python} para conseguir acessar a API por URL's, e a biblioteca json também do \textit{Python} para transformar o Json retornado pela requisição da URL em um objeto em \textit{Python}.
-
-O aplicativo verifica se a partida requisitada existe e se os dados necessários estão completo, salvando no banco de dados apenas as partidas válidas. O pseudo-codigo se encontra no Algoritmo \ref{alg:main-aqui}.
+O aplicativo verifica se a partida requisitada existe e se os dados necessários estão completos, salvando no banco de dados apenas as partidas válidas. O pseudo-código se encontra no Algoritmo \ref{alg:main-aqui}.
 
 \
  %Código
@@ -100,7 +94,8 @@ O aplicativo verifica se a partida requisitada existe e se os dados necessários
 \
 
 Onde com esse algoritmo foram armazenadas \numpartidas\ jogos válidos diferentes, e foi decidido usar apenas as partidas ranqueadas 5 contra 5, já que estas são as partidas responsáveis pela classificação dos jogadores dentro dos jogo, e as partidas não ranqueadas são consideradas como amistosas.
-Com esse escopo, o número de partidas usados foram ao todo \partidasrankeds\ partidas ranqueadas diferentes, na tabela \ref{tab:subset-lol} é possível ver uma pequena fatia dos dados salvos.
+Com esse escopo, o número de partidas usados foram ao todo \partidasrankeds\ partidas ranqueadas diferentes.
+Na tabela \ref{tab:subset-lol} é possível ver uma pequena fatia dos dados salvos.
 
 
 \begin{table}[H]
@@ -122,21 +117,20 @@ match\_id  & kills & deaths & assists & win & champ\_id & lane   & player\_id & 
 \small{Fonte: Autor.}
 \end{table}
 
-Na etapa seguinte são contabilizados quantas vezes cada campeão jogou com outro campeão, seja no mesmo time ou no time adversário, calculado quantas vitória contra, e com o outro herói.
-E com as informações já processados, foi montado um \textit{web service}, que sera explicado na secão \ref{chap:web}, para uma melhor visualização dos dados obtidos utilizando uma biblioteca chamada D3.js, que será explicado na próxima seção.
+Na etapa seguinte são contabilizados quantas vezes cada campeão jogou com outro campeão, seja no mesmo time ou no time adversário, calculando quantas vitórias em oposição e quantas vitórias em junção.
+E com as informações já processadas foi montado um \textit{web service}, que será explicado na seção \ref{chap:web}, utilizando uma biblioteca chamada D3.js para uma melhor visualização dos dados obtidos , biblioteca essa que será explanado na próxima seção.
 
 \section{D3.js}
-A biblioteca D3.js, é uma biblioteca em JavaScript, especializada em dar vida aos dados. Segundo \citet{d3cook} "Em certo sentido, o D3 é uma biblioteca JavaScript especializada que permite criar incríveis
-visualizações de dados usando uma abordagem mais simples (baseada em dados), aproveitando os padrões da Web existentes", e a organização oficial diz :
+A biblioteca D3.js é uma biblioteca em JavaScript especializada em dar vida aos dados. Segundo \citet[tradução do autor]{d3cook} "Em certo sentido, o D3 é uma biblioteca JavaScript especializada que permite criar incríveis visualizações de dados usando uma abordagem mais simples (baseada em dados), aproveitando os padrões da \textit{Web} existentes", e a organização oficial continua :
 
 
 \begin{quote}
-O D3.js é uma biblioteca em JavaScript para manipulação de documentos por dados. D3 te ajuda a trazer vida para os dados utilizando HTML, SVG e CSS. A enfase da biblioteca D3 nos padrões da \textit{web} dá-lhe todos os recursos dos navegadores modernos sem te prender a um \textit{framework} propietário, combinando poderosos componentes de visualização e uma aproximacão orientada por dados da manipulação do DOM.
-\cite[tradução nossa]{d3js}
+O D3.js é uma biblioteca em JavaScript para manipulação de documentos por dados. D3 te ajuda a trazer vida para os dados utilizando HTML, SVG e CSS. A ênfase da biblioteca D3 nos padrões da \textit{web} dá-lhe todos os recursos dos navegadores modernos sem te prender a um \textit{framework} proprietário, combinando poderosos componentes de visualização e uma aproximação orientada por dados da manipulação do DOM.
+\cite[tradução do autor]{d3js}
 \end{quote}
 
 
-Com essa biblioteca, é possível dar vida à informações e dados como por exemplo a Figura \ref{fig:d3}, duas das diversas maneiras de se exibir informações com o D3.js. E com o D3 foi gerado o grafo do \textit{web service} que sera melhor explicado na seção seguinte.
+Com essa biblioteca é possível dar vida à informações e dados, como por exemplo a Figura \ref{fig:d3} que possui duas das diversas maneiras de se exibir informações com o D3.js . E com o D3 foi gerado o grafo do \textit{web service}, programa este que será clarificado na seção seguinte.
 
 \begin{figure}[H]
 	\caption{Exemplo de visualização de dados utilizando o D3.js.}
@@ -153,11 +147,12 @@ Com essa biblioteca, é possível dar vida à informações e dados como por exe
 \section{\textit{web service}}
 \label{chap:web}
 
-O \textit{web service}, foi criado utilizando o \textit{framework} Flask, que como \citet[tradução nossa]{flask} diz "Flask é um micro \textit{framework} para Python baseado em Werkzeug, Jinja 2 e em boas intenções.".
+O \textit{web service} foi criado utilizando o \textit{framework} Flask, que como \citet[tradução do autor]{flask} diz "Flask é um micro \textit{framework} para Python baseado em Werkzeug, Jinja 2 e em boas intenções.".
 
-Com essa serviço, será possível um relatório geral, onde ele consegue ver quais campeões são melhores contra e com quais, consegue filtrar quais campeões podem participar da pesquisa, e quais não podem. 
+Com esse serviço será possível um relatório geral onde o usuário será capaz de ver quais são os campeões melhores contra os outros e quais são as duplas mais favoráveis, podendo filtrar quais campeões podem participar da pesquisa e quais não podem. 
+Também será exequível a predição de uma partida, onde se seleciona os campeões de cada equipe e o sistema tenta antever quem vencerá.
 
-Nas figuras \ref{fig:web_service_relatorio} é possível ver um exemplo de uso do serviço para uma visão geral das informações. E na Figura \ref{fig:web_service_predict} é possível ver o uso da ferramenta para predição de uma batalha. Na seção \ref{chap:pred} será melhor abordado a maneira que essa predição é feita.
+Na figura \ref{fig:web_service_relatorio} é possível ver um exemplo de uso do serviço para uma visão geral das informações, já na figura \ref{fig:web_service_predict} é possível ver o uso da ferramenta para predição de uma partida. Na seção \ref{chap:pred} será esclarecido a maneira que essa predição é feita.
 
 
 
@@ -165,17 +160,17 @@ Nas figuras \ref{fig:web_service_relatorio} é possível ver um exemplo de uso d
 	
 	\centering
 	\caption{Exemplo de uso do \textit{web service} para visão geral dos dados.}
-	\subfloat[Filtro partida para campeões da mesma equipe]{
+	\subfloat[Filtro dos dados para campeões da mesma equipe.]{
 		\includegraphics[width=0.4\textwidth]{imagens/web_1.JPG}
 		}
-	\subfloat[Filtro para numero de partidas para adversários]{
+	\subfloat[Filtro dos dados para adversários.]{
 		\includegraphics[width=0.4\textwidth]{imagens/web_2.JPG}
 		}
 	\qquad
-	\subfloat[Filtro para escolher quais campeões podem participar (\textit{picks}), e quais nao podem (\textit{bans})]{
+	\subfloat[Filtro para escolher quais campeões podem participar (\textit{picks}) e quais nao podem (\textit{bans}).]{
 		\includegraphics[width=0.4\textwidth]{imagens/web_3.JPG}
 	}
-	\subfloat[Exemplo de grafo exibido pelo \textit{web service}, sendo as setas vermelhas mostrando quem é bom contra quem, e as linhas continuas quem é bom com quem, e o tamanho do circulo é a frequência daquela ligação, e a cor a força da ligação]{
+	\subfloat[Exemplo de grafo exibido pelo \textit{web service}, sendo as setas vermelhas mostrando quem é bom contra quem, e as linhas continuas quem é bom com quem. O tamanho do circulo é a frequência daquela ligação e a cor é a força da ligação.]{
 		\includegraphics[width=0.4\textwidth]{imagens/web_4.JPG}
 	}
 
@@ -208,4 +203,4 @@ Nas figuras \ref{fig:web_service_relatorio} é possível ver um exemplo de uso d
 
 \section{Predição dos dados}
 \label{chap:pred}
-Como ainda não conseguimos dados suficiente, não chegamos até aqui.
+Como ainda não conseguimos dados suficientes, não chegamos até aqui.
