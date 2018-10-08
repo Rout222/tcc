@@ -9,6 +9,8 @@ Quando descrevemos uma situação utilizando pontos e ligações entre algum des
 
 Segundo \citet{Viana2007} "Um grafo \(G(V, E)\) pode ser definido como um conjunto de vértices \(V\), e um conjunto de conexões \(E\) " e ele continua: "Cada elemento do conjunto \(E\), associa dois elementos do conjunto \(V\), assim, se \((u,v) \in E\), então existe uma conexão entre os vértices u e o vértice v .". Sendo eles classificados como vizinhos ou adjacente \cite{grafosucinto}.
 
+Nas próximas sub-seções será descrito características básicas de grafo que são essenciais para o entendimento do trabalho aqui descrito. Na seção \ref{chap:redecomplexa} será explicado sobre a modelação do mundo real em forma de grafos e como esse grafo especial é chamado.
+
 
 \subsection{Binário e Não-binário}
 Os grafos também podem ser classificados como binários e não-binários, sendo os binários suas arestas representadas por 1 ( se existem ) ou 0 ( se não existem ) e os não-binários quando existe um conjunto \(W\) onde informa a intensidade da interação de uma aresta entre dois vértices  \cite{Viana2007}.
@@ -92,29 +94,47 @@ O grau de um vértice \(v\) é definido por \citet{grafosucinto} sendo a quantid
 O grau máximo de um grafo \(G\) é o número do vértice que tem o maior grau presente nesse grafo, ou seja \(\Delta(G) = max\{g(v) : v \in V(G)\}\). E o grau mínimo de um grafo \(G\) é o grau do vértice com menor grau, \(\delta(G) = min\{g(v) : v \in V(G)\}\). E ainda, um grafo é regular se \(\delta(G) = \Delta(G)\) e é \(k\)-regular se \(\delta(G) = \Delta(G) = k\) \cite{grafosucinto}.
 
 
-E quando modelamos um sistema real em forma de grafos vamos ver na seção seguinte que esse grafo recebe um nome especial, sendo chamado de rede complexa.
+Quando modelamos um sistema real em forma de grafos vamos ver na seção seguinte que esse grafo recebe um nome especial, sendo chamado de rede complexa.
 
 \section{Redes Complexas}
 \label{chap:redecomplexa}
-Sobre redes complexas \citet{Viana2007} diz que é utilizado o termo redes complexas quando um grafo representa um sistema físico real, então levando em conta isso, um grafo do jogo LOL pode ser considerado como uma rede complexa.
+Sobre redes complexas \citet{Viana2007} diz que é utilizado o termo redes complexas quando um grafo representa um sistema físico real, então um grafo do jogo LOL pode ser considerado como uma rede complexa.
 
-Para que seja possível classificar os resultados adequadamente, serão apresentados três modelos que se destacam no estado da arte segundo \citet{Albert2002}: As redes \textit{small worlds}, as redes livres de escala e as redes aleatórias. E também será explicado sobre o coeficiente de aglomeração .
+Para que seja possível classificar o grafo adequadamente, serão apresentados três modelos que se destacam segundo \citet{Albert2002}: As redes \textit{small-worlds}, as redes livres de escala e as redes aleatórias. E também será explicado sobre o coeficiente de aglomeração para melhor caracterização do modelo adquirido.
 
-\subsection{\textit{Redes Small Worlds}}
- As redes \textit{small worlds} são redes que o caminho entre dois nós são relativamente pequenos. (continua...).
+\subsection{\textit{Redes Small-Worlds}}
+ As redes \textit{small-worlds} são um modelo de rede complexas proposta por \citet{watts1998collective}, \citet{lopes2011redes} diz que "Este modelo representa uma alternativa ao modelo aleatório, assumindo como hipótese que as redes biológicas, tecnológicas e sociais que podem apresentar uma topologia que não é totalmente aleatória". 
  
+ Tendo um grafo regular em formato circular com $v$ vértices e $k$ arestas ligando os vizinhos mais próximos, depois de formado o grafo cada aresta tem uma probabilidade $p$ de se reconectar com outro vértice aleatório. Permitindo que a geração do grafo seja controlado para uma rede regular com $p \approx 0$ ou uma rede aleatória com $p \approx 1$, e também permitindo uma rede com topologia intermediária $0 < p < 1$ \cite{lopes2011redes}.
+ \begin{figure}[!htb]
+ 	\caption{Variação do $p$ sem alterar o numero de vértices $v = 20$ e $k = 4$.}
+ 	\begin{center}
+ 		\includegraphics[width=0.7\linewidth]{imagens/watts-sm}
+ 	\end{center}
+ 	\small{Fonte: \citet{watts1998collective}.}
+ 	\label{fig:watts-sm}
+ \end{figure} 
+ 
+ As redes \textit{small-worlds} são caracterizadas com duas principais medidas: O tamanho do caminho $L(p)$ e o coeficiente de agrupamento ou coeficiente de aglomeração $C(p)$. $L(p)$ é medido como a média do caminho mais curto de todos pares de vértices \cite{lopes2011redes}. O coeficiente de aglomeração será melhor definido na seção \ref{subsec:coeficienteaglomeracao}.
  
  \subsection{Redes Livres de Escala}
- Nas redes livres de escala um nó tem a probabilidade \(P(k)\) de possuir \(k\) arestas obedecendo a lei da potência \(P(k) \sim k^{-y}\) \cite{Albert2002,Antiqueira2005}. Segundo \citet{Viana2007} nas redes livres de escala muitos nós tem poucas arestas e poucos nós se ligam a muitos.
+ As redes livres de escala, foram propostas por \citet{barabasi1999emergence}, nelas um nó tem a probabilidade \(P(k)\) de possuir \(k\) arestas obedecendo a lei da potência \(P(k) \sim k^{-\gamma}\), onde $\gamma$ determina o decaimento exponencial  \cite{Albert2002,Antiqueira2005, lopes2011redes}. Segundo \citet{Viana2007} nas redes livres de escala muitos nós tem poucas arestas e poucos nós se ligam a muitos.
+ 
+\citet{lopes2011redes} ainda diz: "Este modelo é baseado em duas regras: crescimento e preferência linear de ligação. A geração de redes Barabási e Albert é iniciada com a inclusão de $n_0 < n$ vértices conectados aleatoriamente". Na etapa de crescimento da rede, a cada instante de tempo $t$ um novo vértice $v$ é adicionado na rede, o número de arestas desse vértice segue uma preferencia linear de ligação da fórmula:
+\[ P(v_i \leftrightarrow v_j) = \frac{k_j}{\sum_u k_U}, \forall v_u \in V \]
+
+Sendo $P$ a probabilidade de um vértice $v_i$ ser conectado ao novo vértice $v_j$ é linearmente proporcional ao grau $k_j$ do vértice $v_j$.
+
+{\Huge ainda vou escrever sobre a variação sobre o tempo}
  
      
 \subsection{Redes Aleatórias}
-Segundo \citet{Viana2007} as redes aleatórias são um sistema formado por E arestas e N vértices, onde as arestas são distribuídas aleatoriamente. \citet{CunhaRecuero2004} apud ( tenho que ver certinho ) exemplifica esse tipo de rede como uma festa, onde “bastava uma conexão entre cada um dos convidados de uma festa, para que todos estivessem conectados ao final dela” e que quanto mais conexões forem criadas, maior a chance de serem criados grupos de pessoas que de tempos em tempos se relacionavam com outros grupos e que poderiam concluir que esses nós se relacionavam de forma randômica.
-
+Segundo \citet{Viana2007} as redes aleatórias são um sistema formado por $E$ arestas e $N$ vértices, onde as arestas são distribuídas aleatoriamente. 
+{\Huge VOU CONTINUAR}
  
- \subsection{Coeficiente de Aglomeração}
- Segundo \citet{Viana2007} o coeficiente de aglomeração mede o quão conectado estão os nós da rede ou do grafo. \citet{Antiqueira2005}  define o coeficiente de aglomeração sendo:\[CA_i = \frac{E_i}{k_i(k_i-1)}\]
-
+\subsection{Coeficiente de Aglomeração}
+\label{subsec:coeficienteaglomeracao}
+Segundo \citet{Viana2007} o coeficiente de aglomeração mede o quão conectado estão os nós da rede ou do grafo. \citet{Antiqueira2005}  define o coeficiente de aglomeração sendo:\[CA_i = \frac{E_i}{k_i(k_i-1)}\]
 
 \citet{Antiqueira2005}  continua: “Sendo para cada vértice \(i\) existe \(k_i\) arestas, que os ligam a outros \(k_i\) vértices. Se esses \(k_i\) vértices estivessem ligados diretamente à todos os outros vértices do conjunto, haveriam \(k_i(k_i- 1)\) arestas entre eles. E assumindo \(E_i\) o número de arestas que existentes entre os \(k_i\) vértices.	O coeficiente da rede inteira é a média de todos \(CA_i\)”.
 
@@ -204,24 +224,3 @@ O jogo \textit{League of Legends} é um jogo classificado como arena de batalha 
 
 
 {\Huge VOU REFAZER}
-
-
-No estado da arte, estudos com jogos de gênero MOBA são poucos, mas relacionados a redes complexas e predição existem diversos.
-
-\subsection{Identifying Patterns in Combat that are Predictive of success}
- O trabalho de Yang \textit{et al}, relacionou a posição dos jogadores em uma batalha do MOBA com redes complexas, ao predizer o time vencedor daquela batalha.
-
-\begin{figure}[!ht]
-	\caption{As estruturas gráficas de uma batalha de MOBA}
-	\begin{center}
-		\includegraphics[width=15cm]{imagens/yang.PNG}
-	\end{center}
-	\small{Fonte: \cite{Yang2014}.}
-	\label{fig:yang2014}
-\end{figure}
-
-Yang \textit{et al} modela os dados de um combate, em redes complexas, e treina uma arvore de decisão usando as melhores características tiradas dessa rede complexa. Depois de treinado a árvore, é identificado regras de combate que são preditivas de sucesso, e depois essas regras são traduzidas de volta em um padrão de combate específico usando uma técnica chamada mineração de subgrafo frequente.
-
-\subsection{Análise de uma Métrica Alternativa para Predição de Laços Sociais em Grafos Lei de Potência}
-
-Feito por \citeauthor{Danielewicz2016}, ela mostra uma visão geral do problema de predição de laços sociais, analisa os modelos de geração de grafos principalmente que seguem a lei da potência, no âmbito de formação de laços sociais e depois consegue uma métrica para predição de laços. Ela faz testes usando técnicas diferentes, mostrando seus resultados.
