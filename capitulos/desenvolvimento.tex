@@ -35,9 +35,9 @@ Sabendo qual informação vamos armazenar, ficou escolhido a linguagem \textit{P
 
 
 \section{Banco de Dados}
-
+(continua...)
 \begin{figure}[H]
-	\caption{Esquema do Banco de Dados.}
+	\caption{Esquema usado do Banco de Dados.}
 	\begin{center}
 		\includegraphics[width=17cm]{imagens/esquema.png}
 	\end{center}
@@ -204,3 +204,79 @@ Na figura \ref{fig:web_service_relatorio} é possível ver um exemplo de uso do 
 \section{Predição dos dados}
 \label{chap:pred}
 Como ainda não conseguimos dados suficientes, não chegamos até aqui.
+
+
+\
+%Código
+
+
+\begin{algorithm}[H]
+	\SetAlgoLined
+	\Inicio{
+		\Entrada{\textit{Dataset}, Nó raiz, Número de grupos}
+		\Saida{Salva os grupos}
+		Raiz = vértice raiz;
+		
+		N = numero de clusters;
+		
+		G = Carrega vértices e arestas do arquivo de entrada;
+		
+		MatrizAdjacencia = distancia\_euclidiana(G);
+		
+		AGM = prim(MatrizAdjacencia, Raiz)
+		
+		Cluster = Cria\_Clusters(AGM, N)
+		
+		Salva os grupos no arquivo de saida;
+	}
+	\label{alg:main-aqui}
+	\caption{\textsc{Algoritmo principal}}
+\end{algorithm}
+
+\
+\
+%Código
+
+
+\begin{algorithm}[H]
+	\SetAlgoLined
+	\Inicio{
+		\Entrada{Arquivo .CSV}
+		\Saida{Matriz de Adjacência}
+	}
+	\label{alg:main-aqui}
+	\caption{Distância Euclidiana}
+\end{algorithm}
+
+\
+\
+%Código
+
+
+\begin{algorithm}[H]
+	\SetAlgoLined
+	\Inicio{
+		\Entrada{Matriz de Adjacência, Nó raiz}
+		\Saida{Arvore Geradora Mínima (AGM)}
+	}
+	\label{alg:main-aqui}
+	\caption{Prim}
+\end{algorithm}
+
+\
+
+\
+%Código
+
+
+\begin{algorithm}[H]
+	\SetAlgoLined
+	\Inicio{
+		\Entrada{AGM, Número de Grupos}
+		\Saida{Grupos separados}
+	}
+	\label{alg:main-aqui}
+	\caption{Clusterização}
+\end{algorithm}
+
+\

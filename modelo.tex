@@ -1,13 +1,13 @@
-%% review - 01/02/2018 - Thales Nicolai Tavares
 \documentclass[tg]{mdtufsm}
 % * <routmagno@gmail.com> 2018-05-17T18:40:42.688Z:
 %
 % ^.
 \usepackage{caption}
+\usepackage[lofdepth,lotdepth,position=bottom]{subfig}
 \captionsetup{
 	justification=raggedright,
 	figurewithout,labelsep=endash,
-	singlelinecheck=false
+	singlelinecheck=false,compatibility=false
 	}
 
 
@@ -15,11 +15,25 @@
 \newcommand\numpartidas{28597}
 \newcommand\partidasrankeds{11717}
 
+
+%biblioteca para os grafos%
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,matrix,positioning,backgrounds,calc}
+\usetikzlibrary{plotmarks,patterns}
+\usetikzlibrary{positioning}
+\tikzset{main node/.style={circle,fill=orange!20,draw,minimum size=1cm,inner sep=0pt},
+}
+\tikzstyle{offnode}=[circle,fill=white!20,draw,minimum size=1cm,inner sep=0pt]
+\tikzstyle{targetnode}=[circle,fill=blue!20,draw,minimum size=1cm,inner sep=0pt]
+\tikzstyle{offline}=[gray, thick, dashed]
+
+\renewcommand{\bf}{\bfseries}
 %tabelas
 
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{graphicx}
+%\usepackage{subcaption}
 
 \usepackage{chngcntr}
 \counterwithout{figure}{chapter}
@@ -34,6 +48,7 @@
 \usepackage[portuguese,titlenumbered,ruled]{algorithm2e} % algoritmos
 \usepackage[T1]{fontenc}        % pacote para conj. de caracteres correto
 \usepackage{fix-cm} %para funcionar corretamente o tamanho das fontes da capa
+
 \usepackage{times, color, xcolor}       % pacote para usar fonte Adobe Times e cores
 \usepackage[utf8]{inputenc}   % pacote para acentuação
 \usepackage{graphicx}  % pacote para importar figuras
@@ -72,11 +87,11 @@
 \titulacao{Bacharel} %Tecn\'{o}logo ou Bacharel ou Licenciatura
 
 
-
+\SetKwComment{Comment}{/*}{*/}
 %folha rosto
 \course{Bacharelado em Engenharia de Computação}
 \initials{ENG COMP} 
-\institute{???????Centro de Tecnologia}
+\institute{Centro de Tecnologia}
 \degree{Bacharel em Engenharia de Computação}
 
 \faculdade{Instituto Federal de Minas Gerais}

@@ -1,69 +1,191 @@
 \chapter{Fundamentação Teórica}
 \label{chap:fundteorica}
 Nessa parte será apresentados conceitos para melhor entendimento deste trabalho e da modelação utilizada. 
-A seção \ref{chap:grafos} elucida o que são grafos e o capítulo \ref{chap:redecomplexa} explica a variação de grafo utilizado para modelar o problema proposto. Depois, na seção \ref{chap:lol} é esclarecido o ambiente que será abstraído, explicando algumas regras básicas do jogo.
+A seção \ref{chap:grafos} elucida o que são grafos e o capítulo \ref{chap:redecomplexa} explica a variação de grafo utilizado para modelar o problema proposto. Depois na seção \ref{chap:lol} é esclarecido o ambiente que será abstraído, explicando algumas regras básicas do jogo.
 \section{Grafos}
 \label{chap:grafos}
 
-Quando descrevemos uma situação utilizando pontos e ligações entre algum desses pontos, como o exemplo os pontos sendo pessoas, e as ligações entre as pessoas sendo as amizades feitas, a abstração matemática desse tipo dá lugar ao conceito de grafo \cite{Lucchesi1979}.
+Quando descrevemos uma situação utilizando pontos e ligações entre algum desses pontos, como o exemplo os pontos sendo pessoas e as ligações entre as pessoas sendo as amizades feitas, a abstração matemática desse tipo dá lugar ao conceito de grafo \cite{Lucchesi1979}.
 
-Segundo \citet{Viana2007} "Um grafo \(G(V, E)\) pode ser definido como um conjunto de vértices \(V\), e um conjunto de conexões \(E\) " e ele continua: "Cada elemento do conjunto \(E\), associa dois elementos do conjunto \(V\), assim, se \((u,v) \in E\), então existe uma conexão entre os vértices u e o vértice v ."
+Segundo \citet{Viana2007} "Um grafo \(G(V, E)\) pode ser definido como um conjunto de vértices \(V\), e um conjunto de conexões \(E\) " e ele continua: "Cada elemento do conjunto \(E\), associa dois elementos do conjunto \(V\), assim, se \((u,v) \in E\), então existe uma conexão entre os vértices u e o vértice v .". Sendo eles classificados como vizinhos ou adjacente \cite{grafosucinto}.
 
-Os grafos também podem ser classificados como binários e não-binários, sendo os binários suas arestas representadas por 1 ( se existem ) ou 0 ( se não existem ), e os não-binários quando existe um conjunto W, onde informa a intensidade da interação de uma aresta entre dois vértices  \cite{Viana2007}.
-(continua...)    
+
+\subsection{Binário e Não-binário}
+Os grafos também podem ser classificados como binários e não-binários, sendo os binários suas arestas representadas por 1 ( se existem ) ou 0 ( se não existem ) e os não-binários quando existe um conjunto \(W\) onde informa a intensidade da interação de uma aresta entre dois vértices  \cite{Viana2007}.
+Na Figura \ref{fig:grafo-exemplobinario} temos um grafo binário onde se \((u,v) \in E\) então ela está representada no grafo, já na Figura \ref{fig:grafo-exemplonaobinario} além da existência da conexão entre os vértices, está representado o conjunto \(W\) informando o peso ou aresta daquela aresta.
+
+\begin{figure}[!h] \centering
+	\centering
+	\caption{Exemplo de grafos.}
+	\subfloat[Grafo binário com quatro vértices e quatro arestas.]{
+		\begin{tikzpicture}
+		\begin{scope}[xshift=4cm]
+		\node[main node] (1) {$1$};
+		\node[main node] (2) [right = 2cm  of 1] {$2$};
+		\node[main node] (3) [below = 2cm  of 1] {$3$};
+		\node[main node] (4) [right = 2cm  of 3] {$4$};
+		
+		\path[draw,thick]
+		(1) edge node {} (2)
+		(1) edge node {} (4)
+		(4) edge node {} (2)
+		(4) edge node {} (3)
+		;
+		\end{scope}
+		\end{tikzpicture}
+		\label{fig:grafo-exemplobinario}
+	}
+	\subfloat[Grafo não-binário com quatro vértices e três arestas.]{
+		\begin{tikzpicture}
+		\begin{scope}[xshift=4cm]
+		\node[main node] (1) {$1$};
+		\node[main node] (2) [right = 2cm  of 1] {$2$};
+		\node[main node] (3) [below = 2cm  of 1] {$3$};
+		\node[main node] (4) [right = 2cm  of 3] {$4$};
+		
+		\path[draw,thick]
+		(1) edge node {2} (2)
+		(1) edge node {1} (3)
+		(2) edge node {1} (4)
+		;
+		\end{scope}
+		\end{tikzpicture}
+		\label{fig:grafo-exemplonaobinario}
+	}
+	\
+	\small{\leftline{Fonte: Autor.}}
+	\label{fig:grafo-exemplo}
+\end{figure}
+
+
+\subsection{Vizinhança}
+\citet{grafosucinto} diz sobre a vizinhança de um grafo que "O conjunto de vértices \(X\) de um grafo \(G\) é o conjunto de todos os vértices que tem algum vizinho em \(X\)", e diz que esse conjunto de vértices pode ser chamado de \(\Gamma_G(X)\). Exemplificando, o conjunto \(\Gamma_G(1)\) da Figura \ref{fig:grafo-exemplobinario} são os vértices \(2\) e \(4\) e a aresta \( (2,4) \) sendo representados na Figura \ref{fig:grafo-vizinhanca}.
+
+\begin{figure}[H] \centering
+	\centering
+	\caption{Exemplo de vizinhança de um vértice de um grafo.}
+		\begin{tikzpicture}
+		\begin{scope}[xshift=4cm]
+		\node[targetnode] (1) {$1$};
+		\node[main node] (2) [right = 2cm  of 1] {$2$};
+		\node[offnode] (3) [below = 2cm  of 1] {$3$};
+		\node[main node] (4) [right = 2cm  of 3] {$4$};
+
+		\path[draw, style={offline}]
+		(1) edge node {} (2)
+		(1) edge node {} (4)
+		(3) edge node {} (4)
+		;
+		\path[draw,thick]
+		(4) edge node {} (2)
+		;
+		\end{scope}
+		\end{tikzpicture}
+	\small{\leftline{Fonte: Autor.}}
+	\label{fig:grafo-vizinhanca}
+\end{figure}
+
+\subsection{Grau}
+
+O grau de um vértice \(v\) é definido por \citet{grafosucinto} sendo a quantidade de arestas que chegam no vértice \(v\), sendo denotado por \(g(v)\). Continuando ainda no exemplo da Figura \ref{fig:grafo-exemplobinario} o \(g(1)\) é 2 pois apenas as arestas \((1,2)\) e \((1,4)\) incidem no vértice 1.
+
+O grau máximo de um grafo \(G\) é o número do vértice que tem o maior grau presente nesse grafo, ou seja \(\Delta(G) = max\{g(v) : v \in V(G)\}\). E o grau mínimo de um grafo \(G\) é o grau do vértice com menor grau, \(\delta(G) = min\{g(v) : v \in V(G)\}\). E ainda, um grafo é regular se \(\delta(G) = \Delta(G)\) e é \(k\)-regular se \(\delta(G) = \Delta(G) = k\) \cite{grafosucinto}.
+
+
+E quando modelamos um sistema real em forma de grafos vamos ver na seção seguinte que esse grafo recebe um nome especial, sendo chamado de rede complexa.
 
 \section{Redes Complexas}
 \label{chap:redecomplexa}
-Sobre redes complexas, \citet{Viana2007} diz que é utilizado o termo redes complexas, quando um grafo representa um sistema físico real.  Então, levando em conta isso, um grafo do jogo LOL pode ser considerado como uma rede complexa.
+Sobre redes complexas \citet{Viana2007} diz que é utilizado o termo redes complexas quando um grafo representa um sistema físico real, então levando em conta isso, um grafo do jogo LOL pode ser considerado como uma rede complexa.
 
-(continua...)
-
-Para que seja possível classificar os resultados adequadamente, serão apresentados três modelos que se destacam no estado da arte, as redes \textit{small worlds}, as redes livres de escala \citep{Albert2002}, e as redes aleatórias. E também será explicado sobre o coeficiente de aglomeração .
+Para que seja possível classificar os resultados adequadamente, serão apresentados três modelos que se destacam no estado da arte segundo \citet{Albert2002}: As redes \textit{small worlds}, as redes livres de escala e as redes aleatórias. E também será explicado sobre o coeficiente de aglomeração .
 
 \subsection{\textit{Redes Small Worlds}}
- As redes \textit{small worlds}, são redes que, o caminho entre dois nós são relativamente pequenos. (continua...).
+ As redes \textit{small worlds} são redes que o caminho entre dois nós são relativamente pequenos. (continua...).
  
  
  \subsection{Redes Livres de Escala}
- Nas redes livres de escala, um nó tem a probabilidade \(P(k)\) de possuir \(k\) arestas obedecendo a lei da potência \(P(k) \sim k^{-y}\) \cite{Albert2002}, \cite{Antiqueira2005}. Segundo Matheus Palhares Viana, nas redes livres de escala, muitos nós tem poucas arestas, e poucos nós se ligam a muitos.
+ Nas redes livres de escala um nó tem a probabilidade \(P(k)\) de possuir \(k\) arestas obedecendo a lei da potência \(P(k) \sim k^{-y}\) \cite{Albert2002,Antiqueira2005}. Segundo \citet{Viana2007} nas redes livres de escala muitos nós tem poucas arestas e poucos nós se ligam a muitos.
  
      
 \subsection{Redes Aleatórias}
-Segundo \citet{Viana2007}, as redes aleatórias são um sistema formado por E arestas e N vértices, onde as arestas são distribuídas aleatoriamente. \citet{CunhaRecuero2004} exemplifica esse tipo de rede como uma festa, “onde bastaria uma conexão entre cada um dos convidados, para que no fim dela, todos estejam conectados no fim dela” e que quanto mais conexões forem criadas, maior a chance de serem criados grupos de pessoas, e que de tempos se relacionarem com outros grupos, e que poderia concluir que esses nós se relacionarem de forma randômica.
+Segundo \citet{Viana2007} as redes aleatórias são um sistema formado por E arestas e N vértices, onde as arestas são distribuídas aleatoriamente. \citet{CunhaRecuero2004} apud ( tenho que ver certinho ) exemplifica esse tipo de rede como uma festa, onde “bastava uma conexão entre cada um dos convidados de uma festa, para que todos estivessem conectados ao final dela” e que quanto mais conexões forem criadas, maior a chance de serem criados grupos de pessoas que de tempos em tempos se relacionavam com outros grupos e que poderiam concluir que esses nós se relacionavam de forma randômica.
 
  
  \subsection{Coeficiente de Aglomeração}
- Segundo \citet{Viana2007}, o coeficiente de aglomeração mede o quão conectado estão os nós da rede ou do grafo. \citet{Antiqueira2005}  define o coeficiente de aglomeração sendo:\[CA_i = \frac{E_i}{k_i(k_i-1)}\]
+ Segundo \citet{Viana2007} o coeficiente de aglomeração mede o quão conectado estão os nós da rede ou do grafo. \citet{Antiqueira2005}  define o coeficiente de aglomeração sendo:\[CA_i = \frac{E_i}{k_i(k_i-1)}\]
 
 
-    \citet{Antiqueira2005}  continua: “Sendo para cada vértice \(i\) existe \(k_i\) arestas, que os ligam a outros \(k_i\) vértices. Se esses \(k_i\) vértices estivessem ligados diretamente à todos os outros vértices do conjunto, haveriam \(k_i(k_i- 1)\) arestas entre eles. E assumindo \(E_i\) o número de arestas que existentes entre os \(k_i\) vértices.	O coeficiente da rede inteira é a média de todos \(CA_i\)”
+\citet{Antiqueira2005}  continua: “Sendo para cada vértice \(i\) existe \(k_i\) arestas, que os ligam a outros \(k_i\) vértices. Se esses \(k_i\) vértices estivessem ligados diretamente à todos os outros vértices do conjunto, haveriam \(k_i(k_i- 1)\) arestas entre eles. E assumindo \(E_i\) o número de arestas que existentes entre os \(k_i\) vértices.	O coeficiente da rede inteira é a média de todos \(CA_i\)”.
 
-
-\
-
-\begin{figure}[!ht]
-	\caption{Coeficiente de aglomeração}
-	\begin{center}
-		\includegraphics[width=15cm]{imagens/figura_grafos}
-	\end{center}
-	\small{Fonte: Autor (2018).}
-	\label{fig:grafos}
+\begin{figure}[!h] \centering
+	\centering
+	\caption{Coeficiente de aglomeração.}
+	\subfloat[]{
+		\begin{tikzpicture}
+		\begin{scope}[xshift=4cm]
+		\node[targetnode] (1) {$1$};
+		\node[main node] (2) [above right = 2cm  of 1] {$2$};
+		\node[main node] (3) [below right = 2cm  of 1] {$3$};
+		\node[main node] (4) [right = 2cm  of 2] {$4$};
+		\node[main node] (5) [right = 2cm  of 3] {$5$};
+		
+		\path[draw,thick]
+		(1) edge node {} (2)
+		(1) edge node {} (3)
+		(1) edge node {} (4)
+		(1) edge node {} (5)	
+		(2) edge node {} (3)
+		(2) edge node {} (4)
+		(2) edge node {} (5)
+		(3) edge node {} (4)
+		(3) edge node {} (5)
+		(4) edge node {} (5)
+		;
+		\end{scope}
+		\end{tikzpicture}
+		\label{fig:grafo-aglomeracao1}
+	}
+	\subfloat[]{
+		\begin{tikzpicture}
+		\begin{scope}[xshift=4cm]
+		\node[targetnode] (1) {$1$};
+		\node[main node] (2) [above right = 2cm  of 1] {$2$};
+		\node[main node] (3) [below right = 2cm  of 1] {$3$};
+		\node[main node] (4) [right = 2cm  of 2] {$4$};
+		\node[main node] (5) [right = 2cm  of 3] {$5$};
+		
+		\path[draw,thick]
+		(1) edge node {} (2)
+		(1) edge node {} (3)
+		(1) edge node {} (4)
+		(1) edge node {} (5)
+		(2) edge node {} (4)
+		(3) edge node {} (5)
+		(4) edge node {} (5)
+		;
+		\end{scope}
+		\end{tikzpicture}
+		\label{fig:grafo-aglomeracao2}
+	}
+	\
+	\small{\leftline{Fonte: Autor.}}
+	\label{fig:grafo-aglomeracao}
 \end{figure}
 
-\
-	No grafo A da Figura \ref{fig:grafos}, assumindo o peso de todas as arestas como 1, o coeficiente de aglomeração do vértice em azul é 1, e no grafo B o coeficiente do vértice em azul, segundo a fórmula é 12. 
+Na Figura \ref{fig:grafo-aglomeracao1}, assumindo o peso de todas as arestas como 1, o coeficiente de aglomeração do vértice em azul é 1, já na Figura \ref{fig:grafo-aglomeracao2} o coeficiente do vértice em azul segundo a fórmula é $\frac{1}{2}$. 
     
 
 
 \section{\textit{League of Legends}}
 \label{chap:lol}
-O jogo \textit{League of Legends}, é um jogo classificado como arena de batalha online de multi jogadores (do inglês \textit{Multiplayer Online Battle Arena} ) ou conhecido também como MOBA, que é um estilo de jogo onde, duas equipes se enfrentam em um campo de batalha, e cada jogador controla o seu personagem, mais chamado de herói ou campeão. O objetivo do MOBA é derrotar a equipe adversária destruindo a construção principal da equipe inimiga.
+O jogo \textit{League of Legends} é um jogo classificado como arena de batalha online de multi jogadores (do inglês \textit{Multiplayer Online Battle Arena} ) ou conhecido também como MOBA, que é um estilo de jogo onde duas equipes se enfrentam em um campo de batalha e cada jogador controla o seu personagem, mais chamado de herói ou campeão. O objetivo do MOBA é derrotar a equipe adversária destruindo a construção principal da equipe inimiga.
 
-	A arena onde acontece o jogo é uma arena onde normalmente o mapa inicialmente é  espelhado,  ou  seja, o lado que cada time está,  não  oferece vantagens  exclusivas.  O mapa é composto  de  três caminhos até a base inimiga.
+	A arena onde acontece o jogo é uma arena onde normalmente o mapa inicialmente é  espelhado,  ou  seja, o lado que cada time está não  oferece vantagens  exclusivas.  O mapa é composto  de  três caminhos até a base inimiga.
     
 %%preciso conferir se essa foto é acervo, ou é do lol
 
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\caption{Mapa do jogo de \textit{League of Legends}}
 	\begin{center}
 		\includegraphics{imagens/mapa_lol.jpg}
@@ -72,13 +194,17 @@ O jogo \textit{League of Legends}, é um jogo classificado como arena de batalha
 	\label{fig:mapa_lol}
 \end{figure}
 
-	A Figura \ref{fig:mapa_lol} mostra como é realmente o mapa do jogo, sendo que os círculos mostram a localização da construção principal, e os triângulos as construções de suporte de cada equipe, sendo azul uma equipe, e vermelho a outra.
+	A Figura \ref{fig:mapa_lol} mostra como é realmente o mapa do jogo, sendo que os círculos mostram a localização da construção principal, e os triângulos as construções de suporte de cada equipe, sendo azul uma equipe e vermelho a outra.
     
-	Com o início do jogo, cada jogador escolhe  um  herói  diferente, onde  cada  herói tem um conjunto de características únicas, como habilidades especiais,  seu impacto  no jogo  e  nas equipes adversárias e aliadas.
+	Com o início do jogo cada jogador escolhe  um  herói  diferente, onde  cada  herói tem um conjunto de características únicas, como habilidades especiais,  seu impacto  no jogo,  na equipe adversária e na equipe aliada.
     
-	Depois de escolher os heróis de cada equipe, cada jogador, deve procurar adquirir recursos no jogo, e objetivos para conseguir vantagens. Os recursos são limitados por equipe e por tempo, ou seja, deve ser bem escolhido quem ficará com a maior parte dos recursos da equipe.
+	Depois de escolher os heróis de cada equipe, cada jogador deve procurar adquirir recursos no jogo e objetivos para conseguir vantagens. Os recursos são limitados por equipe e por tempo, ou seja, deve ser bem escolhido quem ficará com a maior parte dos recursos da equipe.
 
 \section{Estado da Arte}
+
+
+{\Huge VOU REFAZER}
+
 
 No estado da arte, estudos com jogos de gênero MOBA são poucos, mas relacionados a redes complexas e predição existem diversos.
 
