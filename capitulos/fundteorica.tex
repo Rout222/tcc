@@ -1,20 +1,15 @@
 \chapter{Fundamentação Teórica}
 \label{chap:fundteorica}
-Nessa parte será apresentados conceitos para melhor entendimento deste trabalho e da modelação utilizada. 
-A seção \ref{chap:grafos} elucida o que são grafos e o capítulo \ref{chap:redecomplexa} explica a variação de grafo utilizado para modelar o problema proposto. Depois na seção \ref{chap:lol} é esclarecido o ambiente que será abstraído, explicando algumas regras básicas do jogo.
+Nessa parte será apresentados conceitos para melhor entendimento deste trabalho e da modelagem utilizada. 
+A próxima seção elucida o que são grafos e depois é explicado a variação de grafo utilizado para modelar o problema proposto. Logo em seguida, é esclarecido o ambiente que será abstraído, explicando algumas regras básicas do jogo.
 \section{Grafos}
 \label{chap:grafos}
 
-Quando descrevemos uma situação utilizando pontos e ligações entre algum desses pontos, como o exemplo os pontos sendo pessoas e as ligações entre as pessoas sendo as amizades feitas, a abstração matemática desse tipo dá lugar ao conceito de grafo \cite{Lucchesi1979}.
+Quando descrevemos uma situação utilizando pontos e ligações entre algum desses pontos, a abstração matemática desse tipo dá lugar ao conceito de grafo \cite{Lucchesi1979}.
+Um grafo \(G(V, E)\) pode ser definido como um conjunto de vértices \(V\) e seu conjunto de arestas \(E\) sendo que cada elemento \(e \in E\), associa dois vértices do conjunto \(V\). Assim, se \((u,v) \in E\), então os vértices \(u\) e \(v\) são conectados pela aresta \(e\). Referindo-se a eles como vértices vizinhos ou adjacentes \cite{grafosucinto, Viana2007}.
 
-Segundo \citet{Viana2007} "Um grafo \(G(V, E)\) pode ser definido como um conjunto de vértices \(V\), e um conjunto de conexões \(E\) " e ele continua: "Cada elemento do conjunto \(E\), associa dois elementos do conjunto \(V\), assim, se \((u,v) \in E\), então existe uma conexão entre os vértices u e o vértice v .". Sendo eles classificados como vizinhos ou adjacente \cite{grafosucinto}.
-
-Nas próximas sub-seções será descrito características básicas de grafo que são essenciais para o entendimento do trabalho aqui descrito. Na seção \ref{chap:redecomplexa} será explicado sobre a modelação do mundo real em forma de grafos e como esse grafo especial é chamado.
-
-
-\subsection{Binário e Não-binário}
-Os grafos também podem ser classificados como binários e não-binários, sendo os binários suas arestas representadas por 1 ( se existem ) ou 0 ( se não existem ) e os não-binários quando existe um conjunto \(W\) onde informa a intensidade da interação de uma aresta entre dois vértices  \cite{Viana2007}.
-Na Figura \ref{fig:grafo-exemplobinario} temos um grafo binário onde se \((u,v) \in E\) então ela está representada no grafo, já na Figura \ref{fig:grafo-exemplonaobinario} além da existência da conexão entre os vértices, está representado o conjunto \(W\) informando o peso ou aresta daquela aresta.
+Os grafos também podem ter suas arestas classificadas como binárias e ponderados, sendo os binários suas arestas representadas apenas por 1 ( se existem ) ou 0 ( se não existem ) e os ponderadas quando existe um conjunto \(W\) onde informa a intensidade da interação de uma aresta entre dois vértices  \cite{Viana2007, cormen6}.
+Na Figura \ref{fig:grafo-exemplobinario} temos um grafo binário onde se \((u,v) \in E\) então ela está representada no grafo, já na Figura \ref{fig:grafo-exemploponderado} além da existência da conexão entre os vértices, está representado o conjunto \(W\) informando o peso daquela aresta \(e\).
 
 \begin{figure}[!h] \centering
 	\centering
@@ -52,16 +47,14 @@ Na Figura \ref{fig:grafo-exemplobinario} temos um grafo binário onde se \((u,v)
 		;
 		\end{scope}
 		\end{tikzpicture}
-		\label{fig:grafo-exemplonaobinario}
+		\label{fig:grafo-exemploponderado}
 	}
 	\
 	\small{\leftline{Fonte: Autor.}}
 	\label{fig:grafo-exemplo}
 \end{figure}
 
-
-\subsection{Vizinhança}
-\citet{grafosucinto} diz sobre a vizinhança de um grafo que "O conjunto de vértices \(X\) de um grafo \(G\) é o conjunto de todos os vértices que tem algum vizinho em \(X\)", e diz que esse conjunto de vértices pode ser chamado de \(\Gamma_G(X)\). Exemplificando, o conjunto \(\Gamma_G(1)\) da Figura \ref{fig:grafo-exemplobinario} são os vértices \(2\) e \(4\) e a aresta \( (2,4) \) sendo representados na Figura \ref{fig:grafo-vizinhanca}.
+\citet{grafosucinto} afirma sobre a vizinhança de um grafo que "O conjunto de vértices \(X\) de um grafo \(G\) é o conjunto de todos os vértices que tem algum vizinho em \(X\)", e diz que esse conjunto de vértices pode ser chamado de \(\Gamma_G(X)\). Exemplificando, o conjunto \(\Gamma_G(1)\) da Figura \ref{fig:grafo-exemplobinario} são os vértices \(2\) e \(4\) e a aresta \( (2,4) \) sendo representados na Figura \ref{fig:grafo-vizinhanca}.
 
 \begin{figure}[H] \centering
 	\centering
@@ -69,7 +62,7 @@ Na Figura \ref{fig:grafo-exemplobinario} temos um grafo binário onde se \((u,v)
 		\begin{tikzpicture}
 		\begin{scope}[xshift=4cm]
 		\node[targetnode] (1) {$1$};
-		\node[main node] (2) [right = 2cm  of 1] {$2$};
+ 		\node[main node] (2) [right = 2cm  of 1] {$2$};
 		\node[offnode] (3) [below = 2cm  of 1] {$3$};
 		\node[main node] (4) [right = 2cm  of 3] {$4$};
 
@@ -87,29 +80,29 @@ Na Figura \ref{fig:grafo-exemplobinario} temos um grafo binário onde se \((u,v)
 	\label{fig:grafo-vizinhanca}
 \end{figure}
 
-\subsection{Grau}
+\section{Propriedade topológicas}
 
-O grau de um vértice \(v\) é definido por \citet{grafosucinto} sendo a quantidade de arestas que chegam no vértice \(v\), sendo denotado por \(g(v)\). Continuando ainda no exemplo da Figura \ref{fig:grafo-exemplobinario} o \(g(1)\) é 2 pois apenas as arestas \((1,2)\) e \((1,4)\) incidem no vértice 1.
+O grau de um vértice \(v\) é definido sendo a quantidade de arestas que chegam no vértice \(v\), sendo denotado por \(g(v)\). Continuando ainda no exemplo da Figura \ref{fig:grafo-exemplobinario} o \(g(1)\) é 2 pois apenas as arestas \((1,2)\) e \((1,4)\) incidem no vértice 1 \cite{grafosucinto}.
 
-O grau máximo de um grafo \(G\) é o número do vértice que tem o maior grau presente nesse grafo, ou seja \(\Delta(G) = max\{g(v) : v \in V(G)\}\). E o grau mínimo de um grafo \(G\) é o grau do vértice com menor grau, \(\delta(G) = min\{g(v) : v \in V(G)\}\). E ainda, um grafo é regular se \(\delta(G) = \Delta(G)\) e é \(k\)-regular se \(\delta(G) = \Delta(G) = k\) \cite{grafosucinto}.
+O grau máximo de um grafo \(G\) é o grau do vértice que tem o maior grau presente nesse grafo \(V(G)\), ou seja \(\Delta(G) = max\{g(v) : v \in V(G)\}\). E o grau mínimo de um grafo \(G\) é o grau do vértice com menor grau, \(\delta(G) = min\{g(v) : v \in V(G)\}\). E ainda, um grafo é regular se \(\delta(G) = \Delta(G)\) e é \(k\)-regular se \(\delta(G) = \Delta(G) = k\) \cite{grafosucinto}.
 
 
 Quando modelamos um sistema real em forma de grafos vamos ver na seção seguinte que esse grafo recebe um nome especial, sendo chamado de rede complexa.
 
 \section{Redes Complexas}
 \label{chap:redecomplexa}
-Sobre redes complexas \citet{Viana2007} diz que é utilizado o termo redes complexas quando um grafo representa um sistema físico real, então um grafo do jogo LOL pode ser considerado como uma rede complexa.
+Ainda sobre grafos \citet{Viana2007} afirma que é utilizado o termo redes complexas quando um grafo representa um sistema físico real, então um grafo do jogo LOL pode ser considerado como uma rede complexa.
 
-Para que seja possível classificar o grafo adequadamente, serão apresentados três modelos que se destacam segundo \citet{Albert2002}: As redes \textit{small-worlds}, as redes livres de escala e as redes aleatórias. E também será explicado sobre o coeficiente de aglomeração para melhor caracterização do modelo adquirido.
+Para que seja possível classificar o nosso modelo adequadamente, serão apresentados três modelos que se destacam entre os pesquisadores segundo \citet{albert2002statistical}: As redes \textit{small-worlds}, as redes livres de escala e as redes aleatórias. E também será explicado sobre o coeficiente de aglomeração para melhor caracterização do modelo adquirido.
 
 \subsection{\textit{Redes Small-Worlds}}
- As redes \textit{small-worlds} são um modelo de rede complexas proposta por \citet{watts1998collective}, \citet{lopes2011redes} diz que "Este modelo representa uma alternativa ao modelo aleatório, assumindo como hipótese que as redes biológicas, tecnológicas e sociais que podem apresentar uma topologia que não é totalmente aleatória". 
+ As redes \textit{small-worlds} são um modelo de rede complexas e este tipo de rede complexa representa uma alternativa ao modelo aleatório, assumindo como hipótese que redes complexas do mundo real presente no mundo animal, biológico e químico não são completamente aleatórias \cite{watts1998collective, lopes2011redes}. 
  
- Tendo um grafo regular em formato circular com $v$ vértices e $k$ arestas ligando os vizinhos mais próximos, depois de formado o grafo cada aresta tem uma probabilidade $p$ de se reconectar com outro vértice aleatório. Permitindo que a geração do grafo seja controlado para uma rede regular com $p \approx 0$ ou uma rede aleatória com $p \approx 1$, e também permitindo uma rede com topologia intermediária $0 < p < 1$ \cite{lopes2011redes}.
+ Tendo um grafo regular com $v$ vértices e $k$ arestas ligando os vizinhos mais próximos, depois de formado o grafo cada aresta tem uma probabilidade $p$ de se reconectar com outro vértice aleatório. Permitindo que a geração do grafo seja controlado para uma rede regular com $p \approx 0$ ou uma rede aleatória com $p \approx 1$, e também permitindo uma rede com topologia intermediária $0 < p < 1$ \cite{lopes2011redes}.
  \begin{figure}[!htb]
  	\caption{Variação do $p$ sem alterar o numero de vértices $v = 20$ e $k = 4$.}
  	\begin{center}
- 		\includegraphics[width=0.7\linewidth]{imagens/watts-sm}
+ 		\includegraphics[width=0.9\linewidth]{imagens/watts-sm}
  	\end{center}
  	\small{Fonte: \citet{watts1998collective}.}
  	\label{fig:watts-sm}
@@ -118,19 +111,29 @@ Para que seja possível classificar o grafo adequadamente, serão apresentados t
  As redes \textit{small-worlds} são caracterizadas com duas principais medidas: O tamanho do caminho $L(p)$ e o coeficiente de agrupamento ou coeficiente de aglomeração $C(p)$. $L(p)$ é medido como a média do caminho mais curto de todos pares de vértices \cite{lopes2011redes}. O coeficiente de aglomeração será melhor definido na seção \ref{subsec:coeficienteaglomeracao}.
  
  \subsection{Redes Livres de Escala}
- As redes livres de escala, foram propostas por \citet{barabasi1999emergence}, nelas um nó tem a probabilidade \(P(k)\) de possuir \(k\) arestas obedecendo a lei da potência \(P(k) \sim k^{-\gamma}\), onde $\gamma$ determina o decaimento exponencial  \cite{Albert2002,Antiqueira2005, lopes2011redes}. Segundo \citet{Viana2007} nas redes livres de escala muitos nós tem poucas arestas e poucos nós se ligam a muitos.
+ As redes livres de escala, foram propostas por \citet{barabasi1999emergence}, nelas um nó tem a probabilidade \(P(k)\) de possuir \(k\) arestas obedecendo a lei da potência \(P(k) \sim k^{-\gamma}\), onde $\gamma$ determina o decaimento exponencial \cite{Antiqueira2005, lopes2011redes}. Segundo \citet{Viana2007} nas redes livres de escala muitos nós tem poucas arestas e poucos nós se ligam a muitos.
  
-\citet{lopes2011redes} ainda diz: "Este modelo é baseado em duas regras: crescimento e preferência linear de ligação. A geração de redes Barabási e Albert é iniciada com a inclusão de $n_0 < n$ vértices conectados aleatoriamente". Na etapa de crescimento da rede, a cada instante de tempo $t$ um novo vértice $v$ é adicionado na rede, o número de arestas desse vértice segue uma preferencia linear de ligação da fórmula:
+A rede livre de escala é baseado em duas regras: crescimento e preferência linear de ligação. A redes é gerada com a inclusão de $n_0 < n$ vértices aleatoriamente conectados sendo estas inserções antes do crescimento da rede. Na etapa de crescimento da rede, a cada instante de tempo $t$ um novo vértice $v$ é adicionado na rede, o número de arestas desse vértice segue uma preferencia linear de ligação da fórmula:
 \[ P(v_i \leftrightarrow v_j) = \frac{k_j}{\sum_u k_U}, \forall v_u \in V \]
 
-Sendo $P$ a probabilidade de um vértice $v_i$ ser conectado ao novo vértice $v_j$ é linearmente proporcional ao grau $k_j$ do vértice $v_j$.
+Sendo $P$ a probabilidade de um vértice $v_i$ ser conectado ao novo vértice $v_j$ é linearmente proporcional ao grau $k_j$ do vértice $v_j$  \citet{lopes2011redes}.
 
-{\Huge ainda vou escrever sobre a variação sobre o tempo}
+ \begin{figure}[!htb]
+	\caption{Lei de potência do número de conexões k. De cima pra baixo, as curvas de lei de potência foram obtidas com o parâmetro \(\gamma\) definido como: 0.5 , 1 , 1.5 , 2, 2.5, 3, 4 e 5.}
+	\begin{center}
+		\includegraphics[width=0.95\linewidth]{imagens/scalefree}
+	\end{center}
+	\small{Fonte: \citet{lopes2011redes}.}
+	\label{fig:lei-potencia}
+\end{figure} 
  
+É possível ver na Figura \ref{fig:lei-potencia} que quanto maior o \(\gamma\) menos existem vértices com maior número de arestas. O paradigma de ligação dos novos vértices também é conhecido como "o rico fica mais rico" \cite{costa}.
      
 \subsection{Redes Aleatórias}
-Segundo \citet{Viana2007} as redes aleatórias são um sistema formado por $E$ arestas e $N$ vértices, onde as arestas são distribuídas aleatoriamente. 
-{\Huge VOU CONTINUAR}
+As redes aleatórias, foram inicialmente propostas em 1959 e podem ser consideradas o modelo mais elementar de rede complexas \cite{lopes2011redes, erdds1959random}.
+Segundo \citet{Viana2007} e \citet{lopes2011redes} as redes aleatórias são um sistema formado por $E$ arestas e $N$ vértices, inicialmente são dispostos os vértices, e depois aleatoriamente as arestas são distribuídas com probabilidade igual entre os vértices, evitando auto-relacionamentos e conexões múltiplas entre dois vértices.
+
+
  
 \subsection{Coeficiente de Aglomeração}
 \label{subsec:coeficienteaglomeracao}
@@ -219,6 +222,29 @@ O jogo \textit{League of Legends} é um jogo classificado como arena de batalha 
 	Com o início do jogo cada jogador escolhe  um  herói  diferente, onde  cada  herói tem um conjunto de características únicas, como habilidades especiais,  seu impacto  no jogo,  na equipe adversária e na equipe aliada.
     
 	Depois de escolher os heróis de cada equipe, cada jogador deve procurar adquirir recursos no jogo e objetivos para conseguir vantagens. Os recursos são limitados por equipe e por tempo, ou seja, deve ser bem escolhido quem ficará com a maior parte dos recursos da equipe.
+
+\section{D3.js}
+A biblioteca D3.js é uma biblioteca em JavaScript especializada em dar vida aos dados. Segundo \citet[tradução do autor]{d3cook} "Em certo sentido, o D3 é uma biblioteca JavaScript especializada que permite criar incríveis visualizações de dados usando uma abordagem mais simples (baseada em dados), aproveitando os padrões da \textit{Web} existentes", e a organização oficial continua :
+
+
+\begin{quote}
+	O D3.js é uma biblioteca em JavaScript para manipulação de documentos por dados. D3 te ajuda a trazer vida para os dados utilizando HTML, SVG e CSS. A ênfase da biblioteca D3 nos padrões da \textit{web} dá-lhe todos os recursos dos navegadores modernos sem te prender a um \textit{framework} proprietário, combinando poderosos componentes de visualização e uma aproximação orientada por dados da manipulação do DOM.
+	\cite[tradução do autor]{d3js}
+\end{quote}
+
+
+Com essa biblioteca é possível dar vida à informações e dados, como por exemplo a Figura \ref{fig:d3} que possui duas das diversas maneiras de se exibir informações com o D3.js . E com o D3 foi gerado o grafo do \textit{web service}, programa este que será clarificado na seção seguinte.
+
+\begin{figure}[H]
+	\caption{Exemplo de visualização de dados utilizando o D3.js.}
+	\begin{center}
+		\includegraphics[width=7.5cm]{imagens/d3_1.png}%
+		\hspace{1cm}% add some horizontal spacing
+		\includegraphics[width=7.5cm]{imagens/d3_2.PNG}%
+	\end{center}
+	\small{Fonte: \cite{d3js}.}
+	\label{fig:d3}
+\end{figure}
 
 \section{Estado da Arte}
 

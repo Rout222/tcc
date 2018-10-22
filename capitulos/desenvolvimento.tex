@@ -1,9 +1,8 @@
 \chapter{Metodologia}
 Este capítulo apresenta as ferramentas e algoritmos utilizados neste projeto tanto no processo de extração do conhecimento, quanto na visualização dos dados.
-A primeira seção irá explicar como os dados estão disponíveis e de que informações eles carregam. A segunda clarifica o que é um banco de dados, e porque foi utilizado.  A terceira fala de que maneira se consegue os dados, verifica se os dados estão completos e armazena-os em um banco de dados.
+A primeira seção irá explicar como os dados estão disponíveis na API da Riot Games e de que informações eles carregam. A segunda clarifica como estes dados serão armazenadas.  A terceira fala de que maneira se processa os dados, verifica se os dados estão completos e armazena-os em um banco de dados.
 
-\section{API do \textit{league of legends}}
-
+\section{API}
 A Riot Games, desenvolvedora e dono do jogo \textit{League of Legends}, fornece uma Interface de Programação de Aplicativos ( do inglês \textit{Application Programming Interface} ) ou chamado de API, para que terceiros consigam acessar dados sobre os jogos.
 
 A Riot games disponibiliza o acesso as informações à patir da URL\footnote{http://developer.riotgames.com} de modo que é gerado uma chave válida por 1 ano para projetos cadastrados.
@@ -34,25 +33,24 @@ De todas essas informações retornadas pela função, as que foram armazenadas 
 Sabendo qual informação vamos armazenar, ficou escolhido a linguagem \textit{Python} para ser desenvolvido o algoritmo no qual obterá as informações de forma não manual e o sistema de gerenciamento de banco de dados MySQL. Na próxima seção será apresentado sobre banco de dados e na seção \ref{section:get} será esclarecido como foram obtidos o \textit{dataset} das partidas. 
 
 
-\section{Banco de Dados}
-(continua...)
+\section{Persistência dos dados}
+Os dados adquiridos serão armazenados em um banco de dados MySQL, cujo o esquema das tabelas podem ser vistas na Figura \ref{fig:bd} onde é possível ver quais foram as informações salvas. Com o esquema do banco de dados pronto, já é possível passar para a aquisição dos dados.
 \begin{figure}[H]
 	\caption{Esquema usado do Banco de Dados.}
 	\begin{center}
 		\includegraphics[width=17cm]{imagens/esquema.png}
 	\end{center}
 	\small{Fonte: Autor.}
-	\label{fig:novafigura}
+	\label{fig:bd}
 \end{figure}
 
 
-\section{Conseguindo os dados}
-\label{section:get}
-\textit{Python} é uma linguagem de programação dentre muitas, assim como existem várias linguagens faladas e escritas por nós humanos, existem várias linguagens de programação onde geralmente cada uma se destaca em pelo menos um quesito. 
+\section{Aquisição dos dados}
+A aquisição dos dados será dada à partir de duas fontes: A API da Riot Games e de um \textit{dataset} público\footnote{https://www.kaggle.com/paololol/league-of-legends-ranked-matches}. Ambos apresentam os mesmos conjuntos de informações em formatos diferentes. Será adquirido outros dados além destes que serão adquiridos pela API para agilização do trabalho.
 
-Com isso, foi criado um algoritmo para a aquisição dos dados de partidas pela API do \textit{League of Legends} em \textit{Python}, que usa a biblioteca \textit{requests} para conseguir acessar a API por URL's, e a biblioteca json para transformar o JSON retornado pela requisição da URL em um objeto em \textit{Python}.
+A base de dados, na sua versão 9, conta com aproximadamente 183 mil partidas ranqueadas diferentes, dando uma incrementada no banco de dados inicialmente. Dados estes que precisam ser convertidos para o esquema do banco de dados usados no trabalho.
 
-O aplicativo verifica se a partida requisitada existe e se os dados necessários estão completos, salvando no banco de dados apenas as partidas válidas. O pseudo-código se encontra no Algoritmo \ref{alg:main-aqui}.
+Depois, será usado um algoritmo para a aquisição dos dados de partidas pela API do \textit{League of Legends} em \textit{Python}, que usa a biblioteca \textit{requests} para conseguir acessar a API por URL's, verificando se a partida requisitada existe e se os dados necessários estão completos, salvando no banco de dados apenas as partidas válidas. O pseudo-código se encontra no Algoritmo \ref{alg:main-aqui}.
 
 \
  %Código
@@ -120,39 +118,15 @@ match\_id  & kills & deaths & assists & win & champ\_id & lane   & player\_id & 
 Na etapa seguinte são contabilizados quantas vezes cada campeão jogou com outro campeão, seja no mesmo time ou no time adversário, calculando quantas vitórias em oposição e quantas vitórias em junção.
 E com as informações já processadas foi montado um \textit{web service}, que será explicado na seção \ref{chap:web}, utilizando uma biblioteca chamada D3.js para uma melhor visualização dos dados obtidos , biblioteca essa que será explanado na próxima seção.
 
-\section{D3.js}
-A biblioteca D3.js é uma biblioteca em JavaScript especializada em dar vida aos dados. Segundo \citet[tradução do autor]{d3cook} "Em certo sentido, o D3 é uma biblioteca JavaScript especializada que permite criar incríveis visualizações de dados usando uma abordagem mais simples (baseada em dados), aproveitando os padrões da \textit{Web} existentes", e a organização oficial continua :
-
-
-\begin{quote}
-O D3.js é uma biblioteca em JavaScript para manipulação de documentos por dados. D3 te ajuda a trazer vida para os dados utilizando HTML, SVG e CSS. A ênfase da biblioteca D3 nos padrões da \textit{web} dá-lhe todos os recursos dos navegadores modernos sem te prender a um \textit{framework} proprietário, combinando poderosos componentes de visualização e uma aproximação orientada por dados da manipulação do DOM.
-\cite[tradução do autor]{d3js}
-\end{quote}
-
-
-Com essa biblioteca é possível dar vida à informações e dados, como por exemplo a Figura \ref{fig:d3} que possui duas das diversas maneiras de se exibir informações com o D3.js . E com o D3 foi gerado o grafo do \textit{web service}, programa este que será clarificado na seção seguinte.
-
-\begin{figure}[H]
-	\caption{Exemplo de visualização de dados utilizando o D3.js.}
-	\begin{center}
-		\includegraphics[width=7.5cm]{imagens/d3_1.png}%
-		\hspace{1cm}% add some horizontal spacing
-		\includegraphics[width=7.5cm]{imagens/d3_2.PNG}%
-	\end{center}
-	\small{Fonte: \cite{d3js}.}
-	\label{fig:d3}
-\end{figure}
-
-
-\section{\textit{web service}}
+\section{Visualização dos dados}
 \label{chap:web}
 
 O \textit{web service} foi criado utilizando o \textit{framework} Flask, que como \citet[tradução do autor]{flask} diz "Flask é um micro \textit{framework} para Python baseado em Werkzeug, Jinja 2 e em boas intenções.".
 
-Com esse serviço será possível um relatório geral onde o usuário será capaz de ver quais são os campeões melhores contra os outros e quais são as duplas mais favoráveis, podendo filtrar quais campeões podem participar da pesquisa e quais não podem. 
+Com esse serviço será possível um relatório geral onde o usuário será capaz de ver a topologia do modelo, vendo quais são os campeões melhores contra os outros e quais são as duplas mais favoráveis, podendo filtrar quais campeões podem participar da pesquisa e quais não podem. 
 Também será exequível a predição de uma partida, onde se seleciona os campeões de cada equipe e o sistema tenta antever quem vencerá.
 
-Na figura \ref{fig:web_service_relatorio} é possível ver um exemplo de uso do serviço para uma visão geral das informações, já na figura \ref{fig:web_service_predict} é possível ver o uso da ferramenta para predição de uma partida. Na seção \ref{chap:pred} será esclarecido a maneira que essa predição é feita.
+Na Figura \ref{fig:web_service_relatorio} é possível ver um exemplo de uso do serviço para uma visão geral das informações. Na seção \ref{chap:pred} será esclarecido a maneira que essa predição da partida é feita.
 
 
 
@@ -178,105 +152,13 @@ Na figura \ref{fig:web_service_relatorio} é possível ver um exemplo de uso do 
 	\label{fig:web_service_relatorio}
 \end{figure}
 
-\begin{figure}[H]
-	
-	\centering
-	\caption{Exemplo de uso do \textit{web service} predição da partida.}
-	\subfloat[Esperando ser feito]{
-		\rule{7cm}{7cm}
-	}
-	\subfloat[Esperando ser feito]{
-		\rule{7cm}{7cm}
-	}
-	\qquad
-	\subfloat[Esperando ser feito]{
-		\rule{7cm}{7cm}
-	}
-	\subfloat[Esperando ser feito]{
-		\rule{7cm}{7cm}
-	}
 
-
-	\small{Fonte: Autor.}
-	\label{fig:web_service_predict}
-\end{figure}
+\section{Classificação da topologia}
+Esperando o artigo.
 
 \section{Predição dos dados}
 \label{chap:pred}
-Como ainda não conseguimos dados suficientes, não chegamos até aqui.
+Esperando as referencias.
 
-
-\
-%Código
-
-
-\begin{algorithm}[H]
-	\SetAlgoLined
-	\Inicio{
-		\Entrada{\textit{Dataset}, Nó raiz, Número de grupos}
-		\Saida{Salva os grupos}
-		Raiz = vértice raiz;
-		
-		N = numero de clusters;
-		
-		G = Carrega vértices e arestas do arquivo de entrada;
-		
-		MatrizAdjacencia = distancia\_euclidiana(G);
-		
-		AGM = prim(MatrizAdjacencia, Raiz)
-		
-		Cluster = Cria\_Clusters(AGM, N)
-		
-		Salva os grupos no arquivo de saida;
-	}
-	\label{alg:main-aqui}
-	\caption{\textsc{Algoritmo principal}}
-\end{algorithm}
-
-\
-\
-%Código
-
-
-\begin{algorithm}[H]
-	\SetAlgoLined
-	\Inicio{
-		\Entrada{Arquivo .CSV}
-		\Saida{Matriz de Adjacência}
-	}
-	\label{alg:main-aqui}
-	\caption{Distância Euclidiana}
-\end{algorithm}
-
-\
-\
-%Código
-
-
-\begin{algorithm}[H]
-	\SetAlgoLined
-	\Inicio{
-		\Entrada{Matriz de Adjacência, Nó raiz}
-		\Saida{Arvore Geradora Mínima (AGM)}
-	}
-	\label{alg:main-aqui}
-	\caption{Prim}
-\end{algorithm}
-
-\
-
-\
-%Código
-
-
-\begin{algorithm}[H]
-	\SetAlgoLined
-	\Inicio{
-		\Entrada{AGM, Número de Grupos}
-		\Saida{Grupos separados}
-	}
-	\label{alg:main-aqui}
-	\caption{Clusterização}
-\end{algorithm}
 
 \
