@@ -1,18 +1,28 @@
 \chapter{Introdução}
 \label{chap:Introducao}
 
-Atualmente muitos jogos tem conquistado a atenção e o tempo de muitas pessoas, com o surgimento da nova categoria, chamada \textit{e-sports}, muitas pessoas têm dedicado o seu tempo aos jogos como forma de trabalho, já que a premiação só vem aumentando com o passar dos anos.
+Com o desenvolvimento do uso de grafos para modelar sistemas, muitos pesquisadores tem tido interesse com estudos sobre grafos \cite{joachim}.
+Os objetivos desses pesquisadores são variados, que podem ser desde classificação do grafo \cite{fbclass}, à predição \cite{dota} e para uma compreensão melhor do mesmo \cite{rosvall2008maps}. 
 
-Premiação essa que, segundo uma pesquisa realizada pela \citet{espn}, teve um total no Mundial de \textit{League of Legends} de 2017 ultrapassou 4 milhões de dólares. Mostrando que os jogos já estão tendo premiações consideráveis.
+Considerando o alvo da modelação das pesquisas que vão desde redes sociais \cite{fbclass}, a estruturas químicas \cite{rosvall2008maps} e jogos \cite{dota}, será destacado os jogos, pois ainda no meio acadêmico são novidades quando se trata de modelação em grafos.
+Jogos que tem conquistado a atenção e o tempo de muitas pessoas, movimentando mais receita do que a industria de filmes Hollywood\footnote{http://www.webnoticias.fic.ufg.br/n/68881-industria-de-games-supera-o-faturamento-de-hollywood}.
 
-E como todos os jogos que existem equipes adversárias, no \textit{League of Legends}, existem vencedores e perdedores. E este trabalho vem com a intenção de prever os vencedores de uma partida desse jogo utilizando grafos.
+Com a popularização do \textit{League of Legends}, um jogo da categoria de MOBA, e a crescente premiação\footnote{http://www.espn.com.br/noticia/736116\_premiacao-do-mundial-de-league-of-legends-ultrapassa-us-4-milhoes} dos campeonatos do \textit{League of Legends}\footnote{https://play.br.leagueoflegends.com/pt\_BR}, jovens e adultos tem se tornado \textit{pro players} e dedicado sua vida ao mundo dos jogos\footnote{https://oglobo.globo.com/esportes/de-nerds-ciberatletas-crescimento-exponencial-do-sports-21233721}. 
+Esse fato viabiliza o uso de ferramentas para ajuda-los na analise dos jogos, e de estratégias. 
+E devido a popularidade do jogo e a facilidade de obtenção dos dados devido a API do \textit{League of Legends}, ele é escolhido como foco do trabalho.
 
-Quando descrevemos uma situação utilizando pontos e algumas ligações entre esses pontos, estamos modelando este cenário em forma de grafos. E quando algo está modelado em forma de grafos, podemos usar tecnologias que são aplicáveis em grafos.
+Nesse contexto, o presente trabalho propõe a modelagem do grafo das partidas do jogo \textit{League of Legends}, a sua visualização, a classificação do mesmo e a predição de equipes vencedoras utilizando MLP, no formato de um \textit{webservice}.
+
+\section{Contextualização}
+Na matriz curricular do curso de Engenharia de Computação do Instituto Federal de Minas Gerais - \textit{campus} Bambuí, existem várias disciplinas que foram utilizadas no presente trabalho, como programação orientada a objetos, banco de dados, programação web dentre outras e com o estudo mais aprofundado sobre grafos, foi possível desenvolver o \textit{webservice} pois a API do LOL é fácil de ser usada e facilita a obtenção dos dados.
+
+
+Tendo como proposta o presente trabalho o desenvolvimento de um \textit{webservice} que é possível predizer uma equipe vencedora pela escolha do herói dos jogadores, e também mostrar a sinergia entre os campeões e o seus \textit{counter picks}. Também será feito a classificação da modelação do grafo obtido dos dados do jogo, para fins acadêmicos.
 
 \section{Objetivos}
 Os objetivos desse trabalho podem ser divididos em objetivos gerais e específicos, que podem ser encontrados nas próximas subseções, junto também com os resultados esperados.
 \subsection{Objetivos Gerais}
-Criar um modelo computacional capaz de exibir resumos dos dados armazenados  e predizer um vencedor no jogo \textit{League of Legends} baseando-se num histórico de partidas usando redes complexas.
+Criar um modelo computacional capaz de exibir resumos da rede complexa gerada dos dados armazenados e predizer um vencedor no jogo \textit{League of Legends} baseando-se num histórico de partidas usando MLP.
 
 \subsection{Objetivos Específicos e Resultados Esperados}
 
@@ -25,4 +35,9 @@ Criar um modelo computacional capaz de exibir resumos dos dados armazenados  e p
 \end{enumerate}
 
 \section{Justificativa}
-Classificar uma rede complexa é de grande importância, \cite{asd} diz 
+Devido ao grande crescimento e a popularização do jogo \textit{League of Legends}, tem surgido muitos sites de análises do mesmo que vem auxiliando tanto os jogadores esporádicos, tanto quanto os \textit{pro players}.
+Este trabalho propõe desenvolver um modelo computacional para que usuários, \textit{coach} ou analistas possam ter uma ferramenta para obtenção de informações ou para predição do resultado de um jogo.
+
+A utilização da rede complexa modelar os dados, foi escolhida porque assim é possível representar quantificadamente as conexões de cada herói, sendo conexões aliadas ou adversárias.
+
+Assim, este trabalho se justifica principalmente pela análise da rede complexa obtida, pela visualização gráfica e pela predição de partidas para que essas informações adquiridas se tornem acessíveis. E também para execução desse trabalho é necessário o uso de várias áreas do conhecimento estudadas no curso de Engenharia de Computação, principalmente computação.
