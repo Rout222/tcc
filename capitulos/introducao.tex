@@ -1,26 +1,25 @@
 \chapter{Introdução}
 \label{chap:Introducao}
 
-Com o desenvolvimento do uso de grafos para modelar sistemas, muitos pesquisadores tem tido interesse com estudos sobre grafos \cite{joachim}.
-Os objetivos desses pesquisadores são variados, que podem ser desde classificação do grafo \cite{fbclass}, à predição \cite{dota} e para uma compreensão melhor do mesmo \cite{rosvall2008maps}. 
+Muitos pesquisadores tem tido interesse em estudar sobre grafos, pois estes estão sendo desenvolvidos para modelizar sistemas \cite{joachim}, como, por exemplo, rede de energia de Nova York e a rede alimentar de Little Rock Lake \cite{strogatz}.
+Os objetivos desses pesquisadores são variados, que podem ser desde classificação de grafos \cite{fbclass}, à predição \cite{dota} e para uma compreensão melhor do mesmo \cite{rosvall2008maps}. 
 
-Considerando o alvo da modelação das pesquisas que vão desde redes sociais \cite{fbclass}, a estruturas químicas \cite{rosvall2008maps} e jogos \cite{dota}, será destacado os jogos, pois ainda no meio acadêmico são novidades quando se trata de modelação em grafos.
+Alguns exemplos de modelação das pesquisas são redes sociais \cite{fbclass}, estruturas químicas \cite{rosvall2008maps} e jogos \cite{dota}. Em nosso trabalho, trabalharemos na de jogos, pois ainda no meio acadêmico são novidades quando se trata de modelação em grafos.
 Jogos que tem conquistado a atenção e o tempo de muitas pessoas, movimentando mais receita do que a industria de filmes Hollywood\footnote{http://www.webnoticias.fic.ufg.br/n/68881-industria-de-games-supera-o-faturamento-de-hollywood}.
 
-Com a popularização do \textit{League of Legends}, um jogo da categoria de MOBA, e a crescente premiação\footnote{http://www.espn.com.br/noticia/736116\_premiacao-do-mundial-de-league-of-legends-ultrapassa-us-4-milhoes} dos campeonatos do \textit{League of Legends}\footnote{https://play.br.leagueoflegends.com/pt\_BR}, jovens e adultos tem se tornado \textit{pro players} e dedicado sua vida ao mundo dos jogos\footnote{https://oglobo.globo.com/esportes/de-nerds-ciberatletas-crescimento-exponencial-do-sports-21233721}. 
-Esse fato viabiliza o uso de ferramentas para ajuda-los na analise dos jogos, e de estratégias. 
-E devido a popularidade do jogo e a facilidade de obtenção dos dados devido a API do \textit{League of Legends}, ele é escolhido como foco do trabalho.
+Com a popularização do \textit{\textbf{L}eague \textbf{o}f \textbf{L}egends}\footnote{https://play.br.leagueoflegends.com/pt\_BR}, também conhecido como LOL, um jogo da categoria de MOBA (\textbf{M}ultiplayer \textbf{O}nline \textbf{B}attle \textbf{A}rena, ou, pela tradução, "Arena de batalha online de multijogadores"), e sua crescente premiação em campeonatos\footnote{http://www.espn.com.br/noticia/736116\_premiacao-do-mundial-de-league-of-legends-ultrapassa-us-4-milhoes}, jovens e adultos tem se tornado \textit{pro players} (de tradução: jogadores profissionais) e dedicado sua vida ao mundo dos jogos\footnote{https://oglobo.globo.com/esportes/de-nerds-ciberatletas-crescimento-exponencial-do-sports-21233721}. 
+Esse fato viabiliza o uso de ferramentas para ajudá-los na análise dos jogos e de estratégias. 
+Devido a popularidade do jogo e a facilidade de obtenção dos dados devido a API ( \textbf{A}pplication \textbf{P}rogramming \textbf{I}nterface ou, da tradução, Interface de Programação de Aplicações) do LOL, ele é escolhido como foco do trabalho.
 
-Nesse contexto, o presente trabalho propõe a modelagem do grafo das partidas do jogo \textit{League of Legends}, a sua visualização, a classificação do mesmo e a predição de equipes vencedoras utilizando MLP, no formato de um \textit{webservice}.
+Nesse contexto, o presente trabalho propõe a modelagem do grafo das partidas do jogo \textit{League of Legends}, a sua visualização, a classificação do mesmo e a predição de equipes vencedoras utilizando MLP (Multilayer Perceptron, ou, da tradução, Perceptron Multicamadas), no formato de um \textit{webservice} (da tradução, serviço da internet).
 
 \section{Contextualização}
-Na matriz curricular do curso de Engenharia de Computação do Instituto Federal de Minas Gerais - \textit{campus} Bambuí, existem várias disciplinas que foram utilizadas no presente trabalho, como programação orientada a objetos, banco de dados, programação web dentre outras e com o estudo mais aprofundado sobre grafos, foi possível desenvolver o \textit{webservice} pois a API do LOL é fácil de ser usada e facilita a obtenção dos dados.
+Na matriz curricular do curso de Engenharia de Computação do Instituto Federal de Minas Gerais - \textit{campus} Bambuí, existem várias disciplinas que foram utilizadas no presente trabalho (como Programação Orientada a Objetos, Banco de Dados, Programação Web dentre outras) e com o estudo mais aprofundado sobre grafos, foi possível desenvolver o \textit{webservice} pois a API do LOL é fácil de ser usada e facilita a obtenção dos dados.
 
 
-Tendo como proposta o presente trabalho o desenvolvimento de um \textit{webservice} que é possível predizer uma equipe vencedora pela escolha do herói dos jogadores, e também mostrar a sinergia entre os campeões e o seus \textit{counter picks}. Também será feito a classificação da modelação do grafo obtido dos dados do jogo, para fins acadêmicos.
+A proposta deste trabalho será o desenvolvimento de um \textit{webservice} que indicará uma possível equipe vencedora, de acordo pela escolha dos campeões (personagens jogáveis do jogo, em que cada um, individualmente, tem atributos e habilidades diferentes) dos jogadores, e, também, mostrar a sinergia entre os campeões e o seus \textit{counter picks} (da tradução, "contra-escolha", que seria uma expressão usada nos jogos de MOBA para indicar quando um campeão específico tem, por sí só, uma vantagem sobre outro campeão, também específico). Também será feito a classificação da modelação do grafo obtido dos dados do jogo para fins acadêmicos.
 
 \section{Objetivos}
-Os objetivos desse trabalho podem ser divididos em objetivos gerais e específicos, que podem ser encontrados nas próximas subseções, junto também com os resultados esperados.
 \subsection{Objetivos Gerais}
 Criar um modelo computacional capaz de exibir resumos da rede complexa gerada dos dados armazenados e predizer um vencedor no jogo \textit{League of Legends} baseando-se num histórico de partidas usando MLP.
 
@@ -29,6 +28,7 @@ Criar um modelo computacional capaz de exibir resumos da rede complexa gerada do
 \begin{enumerate}
 \item Construir um \textit{webservice} para visualização;
 \item Calcular deterministicamente quantas vezes cada herói ganhou contra/com outro herói;
+\item Classificar o grafo;
 \item Testar o resultado obtido em outra amostra de dados;
 \item Documentar os resultados.
 
@@ -36,8 +36,9 @@ Criar um modelo computacional capaz de exibir resumos da rede complexa gerada do
 
 \section{Justificativa}
 Devido ao grande crescimento e a popularização do jogo \textit{League of Legends}, tem surgido muitos sites de análises do mesmo que vem auxiliando tanto os jogadores esporádicos, tanto quanto os \textit{pro players}.
-Este trabalho propõe desenvolver um modelo computacional para que usuários, \textit{coach} ou analistas possam ter uma ferramenta para obtenção de informações ou para predição do resultado de um jogo.
+Este trabalho propõe desenvolver um modelo computacional para que usuários, \textit{coach}, ou analistas possam ter uma ferramenta para obtenção de informações ou para predição do resultado de um jogo.
 
-A utilização da rede complexa modelar os dados, foi escolhida porque assim é possível representar quantificadamente as conexões de cada herói, sendo conexões aliadas ou adversárias.
+A utilização da rede complexa para modelar os dados, foi escolhida, pois ela possibilita representar quantificadamente as conexões de cada herói, sendo conexões aliadas ou adversárias.
 
-Assim, este trabalho se justifica principalmente pela análise da rede complexa obtida, pela visualização gráfica e pela predição de partidas para que essas informações adquiridas se tornem acessíveis. E também para execução desse trabalho é necessário o uso de várias áreas do conhecimento estudadas no curso de Engenharia de Computação, principalmente computação.
+Assim, este trabalho se justifica principalmente pela análise da rede complexa obtida, pela visualização gráfica e pela predição de partidas para que estas informações adquiridas se tornem acessíveis. 
+Para execução desse trabalho é necessário o uso de várias áreas do conhecimento estudadas no curso de Engenharia de Computação, principalmente computação.
