@@ -30,7 +30,7 @@ De todas essas informações retornadas pela função, as que foram armazenadas 
 \item \textit{queueId}. E qual o tipo de partida.
 \end{enumerate}
 
-Sabendo qual informação vamos armazenar, ficou escolhido a linguagem \textit{Python} para ser desenvolvido o algoritmo no qual obterá as informações de forma não manual e o sistema de gerenciamento de banco de dados MySQL. Na próxima seção será apresentado sobre banco de dados e na seção \ref{section:get} será esclarecido como foram obtidos o \textit{dataset} das partidas. 
+Sabendo qual informação vamos armazenar, ficou escolhido a linguagem \textit{Python} para ser desenvolvido o algoritmo no qual obterá as informações de forma não manual e o sistema de gerenciamento de banco de dados MySQL. Na próxima seção será apresentado sobre banco de dados e na seção \ref{chap:aquisicao} será esclarecido como foram obtidos o \textit{dataset} das partidas. 
 
 
 \section{Persistência dos dados}
@@ -46,6 +46,7 @@ Os dados adquiridos serão armazenados em um banco de dados MySQL, cujo o esquem
 
 
 \section{Aquisição dos dados}
+\label{chap:aquisicao}
 A aquisição dos dados será dada à partir de duas fontes: A API da Riot Games e de um \textit{dataset} público\footnote{https://www.kaggle.com/paololol/league-of-legends-ranked-matches}. Ambos apresentam os mesmos conjuntos de informações em formatos diferentes. Será adquirido outros dados além destes que serão adquiridos pela API para agilização do trabalho.
 
 A base de dados, na sua versão 9, conta com aproximadamente 183 mil partidas ranqueadas diferentes, dando uma incrementada no banco de dados inicialmente. Dados estes que precisam ser convertidos para o esquema do banco de dados usados no trabalho.
@@ -91,74 +92,43 @@ Depois, será usado um algoritmo para a aquisição dos dados de partidas pela A
 
 \
 
-Onde com esse algoritmo foram armazenadas \numpartidas\ jogos válidos diferentes, e foi decidido usar apenas as partidas ranqueadas 5 contra 5, já que estas são as partidas responsáveis pela classificação dos jogadores dentro dos jogo, e as partidas não ranqueadas são consideradas como amistosas.
-Com esse escopo, o número de partidas usados foram ao todo \partidasrankeds\ partidas ranqueadas diferentes.
-Na tabela \ref{tab:subset-lol} é possível ver uma pequena fatia dos dados salvos.
-
-
-\begin{table}[H]
-\centering
-\caption{Exemplo de \textit{subset} salvo no banco de dados}
-\label{tab:subset-lol}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{cccccccccc}
-match\_id  & kills & deaths & assists & win & champ\_id & lane   & player\_id & platform & type \\
-1282000002 & 11    & 10     & 7       & 0   & 67        & BOTTOM & 16112724   & BR1      & 420  \\
-1282000002 & 2     & 8      & 15      & 0   & 412       & BOTTOM & 18604874   & BR1      & 420  \\
-1282000002 & 7     & 4      & 7       & 0   & 34        & MIDDLE & 19281809   & BR1      & 420  \\
-1282000002 & 7     & 6      & 4       & 0   & 5         & JUNGLE & 21304223   & BR1      & 420  \\
-1282000002 & 5     & 7      & 12      & 0   & 98        & TOP    & 651014     & BR1      & 420  \\
-1282000002 & 0     & 6      & 23      & 1   & 44        & BOTTOM & 18592234   & BR1      & 420  \\
-1282000002 & 19    & 5      & 5       & 1   & 222       & BOTTOM & 7170345    & BR1      & 420 
-\end{tabular}%
-}
-\small{Fonte: Autor.}
-\end{table}
-
+Foi decidido usar apenas as partidas ranqueadas 5 contra 5, já que estas são as partidas responsáveis pela classificação dos jogadores dentro dos jogo, e as partidas não ranqueadas são consideradas como amistosas.
 Na etapa seguinte são contabilizados quantas vezes cada campeão jogou com outro campeão, seja no mesmo time ou no time adversário, calculando quantas vitórias em oposição e quantas vitórias em junção.
-E com as informações já processadas foi montado um \textit{web service}, que será explicado na seção \ref{chap:web}, utilizando uma biblioteca chamada D3.js para uma melhor visualização dos dados obtidos , biblioteca essa que será explanado na próxima seção.
+
+Com as informações já processadas foi montado um \textit{web service}, que será explicado na seção \ref{chap:web}, utilizando uma biblioteca chamada D3.js para uma melhor visualização dos dados obtidos , biblioteca essa que será explanado na próxima seção.
 
 \section{Visualização dos dados}
 \label{chap:web}
 
-O \textit{web service} foi criado utilizando o \textit{framework} Flask, que como \citet[tradução do autor]{flask} diz "Flask é um micro \textit{framework} para Python baseado em Werkzeug, Jinja 2 e em boas intenções.".
+O \textit{web service} será criado utilizando o \textit{framework} Flask, que como \citet[tradução do autor]{flask} diz "Flask é um micro \textit{framework} para Python baseado em Werkzeug, Jinja 2 e em boas intenções.".
 
 Com esse serviço será possível um relatório geral onde o usuário será capaz de ver a topologia do modelo, vendo quais são os campeões melhores contra os outros e quais são as duplas mais favoráveis, podendo filtrar quais campeões podem participar da pesquisa e quais não podem. 
 Também será exequível a predição de uma partida, onde se seleciona os campeões de cada equipe e o sistema tenta antever quem vencerá.
 
-Na Figura \ref{fig:web_service_relatorio} é possível ver um exemplo de uso do serviço para uma visão geral das informações. Na seção \ref{chap:pred} será esclarecido a maneira que essa predição da partida é feita.
-
-
-
-\begin{figure}[H]
-	
-	\centering
-	\caption{Exemplo de uso do \textit{web service} para visão geral dos dados.}
-	\subfloat[Filtro dos dados para campeões da mesma equipe.]{
-		\includegraphics[width=0.4\textwidth]{imagens/web_1.JPG}
-		}
-	\subfloat[Filtro dos dados para adversários.]{
-		\includegraphics[width=0.4\textwidth]{imagens/web_2.JPG}
-		}
-	\qquad
-	\subfloat[Filtro para escolher quais campeões podem participar (\textit{picks}) e quais nao podem (\textit{bans}).]{
-		\includegraphics[width=0.4\textwidth]{imagens/web_3.JPG}
-	}
-	\subfloat[Exemplo de grafo exibido pelo \textit{web service}, sendo as setas vermelhas mostrando quem é bom contra quem, e as linhas continuas quem é bom com quem. O tamanho do circulo é a frequência daquela ligação e a cor é a força da ligação.]{
-		\includegraphics[width=0.4\textwidth]{imagens/web_4.JPG}
-	}
-
-	\small{Fonte: Autor.}
-	\label{fig:web_service_relatorio}
-\end{figure}
 
 
 \section{Classificação da topologia}
+\label{chap:topo}
 Esperando o artigo.
 
 \section{Predição dos dados}
 \label{chap:pred}
-Esperando as referencias.
 
+Para a parte de predição dos dados, serão considerados as conexões e os pesos entre os campeões da partida obtidas através do grafo obtido na Seção \ref{chap:aquisicao}, que em cada partida, foram transformados os dados em 3 informações de entrada, e a saída:
 
+\begin{itemize}
+	\item Sinergia Time 0;
+	\item Sinergia Time 1;
+	\item Entropia Somada;
+	\item Time vencedor.
+\end{itemize}
+
+Sendo que as duas primeiras informações se referem a somatória dos pesos da aresta que diz o quão bom os campeões de um time vencem juntos, de 0 a 1. Pode se dizer que, sendo \( p_1, p_2, p_3, p_4, p_5 \) os heróis do time 0, \( p_6, p_7, p_8, p_9, p_10 \) do time 1, e \(w(u,v)\) sendo o peso da arestas de porcentagem de partidas ganhas juntas de \(u\) e \(v\), de 0 a 1. Então pode se dizer que: \[ Sinergia Time 0 = \sum_{\overset{1<=i<=5}{i<j<=5}}w(p_i,p_j)\] Logo também: \[ Sinergia Time 1 = \sum_{\overset{6<=i<=10}{i<j<=10}}w(p_i,p_j)\]
+
+A entropia somada, foi definida como a soma de quantas partidas um campeão \(c_1\) ganhou de um campeão \(c_2\), sendo que este valor também vai de 0 a 1. A definição matemática pode ser descrita como, sendo \(w_e(p_1,p_2)\) a porcentagem que o \(p_1\) ganhou do \(p_2\) : \[ Entropia Somada = \sum_{\overset{1<=i<=5}{6<=j<=10}}w_e(p_i,p_j)\]
+
+A entropia do time 1 para o time 0 não foi feita, porque a correlação entre as duas entropias seria alta pois, \(w_e(p_i, p_j) = 1 - w_e(p_j, p_i)\) e elas informariam a mesma coisa. Então por eficiência, e para aumentar a velocidade de treino do modelo ela foi retirada. O time vencedor apenas diz qual time venceu, informando se foi o time 0 ou o time 1.
+
+Então com esses valores, é criado um classificador KNN onde com as três informações de entrada, ele tentará classificar o time vencedor. Os valores que foram armazenados, são separados em dados de treino e de teste, sendo que o teste representam 20\% dos dados totais e todos os dados são re-escalados no intervalo de 0 a 1, para que o KNN possa ser treinado adequadamente.
+Com o modelo final treinado e testado, o \textit{webservice} será capaz de comunicar com o KNN para responder às entradas do usuário, indicando um time vencedor.
 \

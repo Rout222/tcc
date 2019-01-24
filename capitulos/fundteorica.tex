@@ -1,15 +1,18 @@
 \chapter{Fundamentação Teórica}
 \label{chap:fundteorica}
 Nessa parte será apresentados conceitos para melhor entendimento deste trabalho e da modelagem utilizada. 
-A próxima seção elucida o que são grafos e depois é explicado a variação de grafo utilizado para modelar o problema proposto. Logo em seguida, é esclarecido o ambiente que será abstraído, explicando algumas regras básicas do jogo.
+A próxima seção elucida o que são grafos e, depois, é explicado a variação de grafo utilizado para modelar o problema proposto. Logo em seguida, é esclarecido o ambiente que será abstraído, explicando algumas regras básicas do jogo.
 \section{Grafos}
 \label{chap:grafos}
 
-Quando descrevemos uma situação utilizando pontos e ligações entre algum desses pontos, a abstração matemática desse tipo dá lugar ao conceito de grafo \cite{Lucchesi1979}.
-Um grafo \(G(V, E)\) pode ser definido como um conjunto de vértices \(V\) e seu conjunto de arestas \(E\) sendo que cada elemento \(e \in E\), associa dois vértices do conjunto \(V\). Assim, se \((u,v) \in E\), então os vértices \(u\) e \(v\) são conectados pela aresta \(e\). Referindo-se a eles como vértices vizinhos ou adjacentes \cite{grafosucinto, Viana2007}.
+De uma maneira resumida e simples, poderia-se dizer que os grafos são a abstração matemática que descreve uma situação utilizando pontos e uma ligação entre alguns destes \cite{Lucchesi1979}.
+Um grafo \(G(V, E)\) pode ser definido como um conjunto de vértices \(V\) e seu conjunto de arestas \(E\), sendo que cada elemento \(e \in E\), associa dois vértices do conjunto \(V\). Assim, se os vértices \((u,v) \in E\), então eles \(u\) e \(v\) são conectados pela aresta \(e\) e são considerados como vértices vizinhos ou adjacentes \cite{grafosucinto, Viana2007}.
 
-Os grafos também podem ter suas arestas classificadas como binárias e ponderados, sendo os binários suas arestas representadas apenas por 1 ( se existem ) ou 0 ( se não existem ) e os ponderadas quando existe um conjunto \(W\) onde informa a intensidade da interação de uma aresta entre dois vértices  \cite{Viana2007, cormen6}.
-Na Figura \ref{fig:grafo-exemplobinario} temos um grafo binário onde se \((u,v) \in E\) então ela está representada no grafo, já na Figura \ref{fig:grafo-exemploponderado} além da existência da conexão entre os vértices, está representado o conjunto \(W\) informando o peso daquela aresta \(e\).
+Os grafos também podem ter suas arestas classificadas como binárias ou ponderadas, sendo os binários suas arestas representadas apenas por 1 ( se existem ) ou 0 ( se não existem ) e as ponderadas quando existe um valor no conjunto \(W\), o qual informa a intensidade da interação de uma aresta entre dois vértices  \cite{Viana2007, cormen6}.
+Na Figura \ref{fig:grafo-exemplobinario} temos um grafo binário,  em que se \((u,v) \in E\), então ela está representada no grafo. Ná na Figura \ref{fig:grafo-exemploponderado} além da existência da conexão entre os vértices, está representado o valor da aresta no conjunto \(W\) informando o peso. 
+
+É chamado de grafo orientado quando \((u,v) \in E\) é diferente de \((v,u) \in E\). Neste caso, quando um vértice é ligado ao outro, não necessariamente esse segundo vértice é conectado ao primeiro, como um exemplo mostrado na Figura \ref{fig:grafo-exemploorientado}.
+\citet{grafosucinto} afirma sobre a vizinhança de um grafo que "O conjunto de vértices \(X\) de um grafo \(G\) é o conjunto de todos os vértices que tem algum vizinho em \(X\)", e diz que esse conjunto de vértices pode ser chamado de \(\Gamma_G(X)\). Exemplificando, o conjunto \(\Gamma_G(1)\) da Figura \ref{fig:grafo-exemplobinario} são os vértices \(2\) e \(4\) e a aresta \( (2,4) \) sendo representados na Figura \ref{fig:grafo-vizinhanca}.
 
 \begin{figure}[!h] \centering
 	\centering
@@ -34,51 +37,64 @@ Na Figura \ref{fig:grafo-exemplobinario} temos um grafo binário onde se \((u,v)
 	}
 	\subfloat[Grafo não-binário com quatro vértices e três arestas.]{
 		\begin{tikzpicture}
+		
 		\begin{scope}[xshift=4cm]
 		\node[main node] (1) {$1$};
 		\node[main node] (2) [right = 2cm  of 1] {$2$};
 		\node[main node] (3) [below = 2cm  of 1] {$3$};
 		\node[main node] (4) [right = 2cm  of 3] {$4$};
 		
-		\path[draw,thick]
-		(1) edge node {2} (2)
-		(1) edge node {1} (3)
-		(2) edge node {1} (4)
-		;
+		\draw[-] (1) -- node[above] {2} (2);
+		\draw[-] (1) -- node[left] {1} (3);
+		\draw[-] (2) -- node[right] {1} (4);
 		\end{scope}
 		\end{tikzpicture}
 		\label{fig:grafo-exemploponderado}
 	}
+
+	\subfloat[Grafo não-binário e orientado.]{
+		\begin{tikzpicture}
+		
+		\begin{scope}[xshift=4cm]
+		\node[main node] (1) {$1$};
+		\node[main node] (2) [right = 2cm  of 1] {$2$};
+		\node[main node] (3) [below = 2cm  of 1] {$3$};
+		\node[main node] (4) [right = 2cm  of 3] {$4$};
+	
+		\draw[<->] (1) -- node[above] {2} (2);
+		\draw[->] (1) -- node[left] {1} (3);
+		\draw[<-] (2) -- node[right] {1} (4);
+		\end{scope}
+		\end{tikzpicture}
+		\label{fig:grafo-exemploorientado}
+	}
+	\subfloat[Exemplo de vizinhança de um vértice de um grafo.]{
+	\begin{tikzpicture}
+	\begin{scope}[xshift=4cm]
+	\node[targetnode] (1) {$1$};
+	\node[main node] (2) [right = 2cm  of 1] {$2$};
+	\node[offnode] (3) [below = 2cm  of 1] {$3$};
+	\node[main node] (4) [right = 2cm  of 3] {$4$};
+	
+	\path[draw, style={offline}]
+	(1) edge node {} (2)
+	(1) edge node {} (4)
+	(3) edge node {} (4)
+	;
+	\path[draw,thick]
+	(4) edge node {} (2)
+	;
+	\end{scope}
+	\end{tikzpicture}
+	\label{fig:grafo-vizinhanca}	
+	}
 	\
 	\small{\leftline{Fonte: Autor.}}
 	\label{fig:grafo-exemplo}
+	
 \end{figure}
 
-\citet{grafosucinto} afirma sobre a vizinhança de um grafo que "O conjunto de vértices \(X\) de um grafo \(G\) é o conjunto de todos os vértices que tem algum vizinho em \(X\)", e diz que esse conjunto de vértices pode ser chamado de \(\Gamma_G(X)\). Exemplificando, o conjunto \(\Gamma_G(1)\) da Figura \ref{fig:grafo-exemplobinario} são os vértices \(2\) e \(4\) e a aresta \( (2,4) \) sendo representados na Figura \ref{fig:grafo-vizinhanca}.
 
-\begin{figure}[H] \centering
-	\centering
-	\caption{Exemplo de vizinhança de um vértice de um grafo.}
-		\begin{tikzpicture}
-		\begin{scope}[xshift=4cm]
-		\node[targetnode] (1) {$1$};
- 		\node[main node] (2) [right = 2cm  of 1] {$2$};
-		\node[offnode] (3) [below = 2cm  of 1] {$3$};
-		\node[main node] (4) [right = 2cm  of 3] {$4$};
-
-		\path[draw, style={offline}]
-		(1) edge node {} (2)
-		(1) edge node {} (4)
-		(3) edge node {} (4)
-		;
-		\path[draw,thick]
-		(4) edge node {} (2)
-		;
-		\end{scope}
-		\end{tikzpicture}
-	\small{\leftline{Fonte: Autor.}}
-	\label{fig:grafo-vizinhanca}
-\end{figure}
 
 \section{Propriedade topológicas}
 
