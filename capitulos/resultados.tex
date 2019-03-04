@@ -1,7 +1,7 @@
 \chapter{Resultados}
 
 O trabalho ficou quatro meses adquirindo partidas da API do LOL, sendo que apenas 14 mil partidas aproximadamente eram válidas para os filtros descritos na Seção \ref{chap:aquisicao} que dizem que as partidas devem ser ranqueadas e não terem os dados incompletos.
-Onde com esse algoritmo foram armazenadas \numpartidas\ jogos válidos diferentes, com esse escopo, o número de partidas usados foram ao todo \partidasrankeds\ contando com o \textit{dataset} público.
+Por este algoritmo, foram armazenadas \numpartidas\ jogos válidos diferentes, com esse escopo e o número de partidas usados foram ao todo \partidasrankeds\, contando com o \textit{dataset} público.
 Na tabela \ref{tab:subset-lol} é possível ver uma pequena fatia dos dados salvos.
 
 
@@ -24,8 +24,8 @@ Na tabela \ref{tab:subset-lol} é possível ver uma pequena fatia dos dados salv
 	\small{Fonte: Autor.}
 \end{table}
 
-Com os dados armazenados, e o processamento deles executado, foi feito o \textit{webservice} que consegue exibir para o usuário informações sobre a topologia do grafo, como quem é adequado contra um campeão específico, ou com o campeão.
-Na Figura \ref{fig:web_service_relatorio} é possível ver um exemplo de uso do serviço para uma visão geral das informações. Sendo que na Figura \ref{fig:topologiawebservice} mostra quem tem uma sinergia com quem (arestas verdes) e quem é um \textit{counter pick} do outro (arestas com uma seta vermelha orientando o grafo). O tamanho das arestas dos campeões indica a quantidade de vezes que que aquele determinado herói jogou com os filtros escolhidos pelo usuário.
+Com os dados armazenados, e o processamento deles executado, foi feito o \textit{webservice} que consegue exibir para o usuário as informações sobre a topologia do grafo, qual campeão é adequado contra um outro específico.
+Na Figura \ref{fig:web_service_relatorio} é possível ver um exemplo de uso do serviço para uma visão geral das informações e na Figura \ref{fig:topologiawebservice} mostra quem tem uma sinergia com quem (arestas verdes) e quem é um \textit{counter pick} do outro (arestas com uma seta vermelha orientando o grafo). O tamanho das arestas dos campeões indica a quantidade de vezes que que aquele determinado herói jogou com os filtros escolhidos pelo usuário.
 
 
 
@@ -53,7 +53,7 @@ Na Figura \ref{fig:web_service_relatorio} é possível ver um exemplo de uso do 
 \end{figure}
 
 
-É possível ver topologia da rede complexa final na Figura \ref{fig:cnfinal}, que consta com 139 vértices diferentes ( todos os heróis lançados até a aquisição dos dados ) e com 19180 arestas já que estas são orientadas.
+É possível ver topologia da rede complexa final na Figura \ref{fig:cnfinal}, que consta com 139 vértices diferentes ( todos os heróis lançados até a aquisição dos dados ) e com 19180 arestas já que estas são orientadas, e que se aproxima de uma rede mundo pequeno, pois faltam duas arestas para se tornar uma rede regular.
 
 \begin{figure}[H]
 	\caption{Visualização da topologia final da Rede Complexa.}

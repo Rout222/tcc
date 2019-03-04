@@ -12,7 +12,7 @@ Os grafos também podem ter suas arestas classificadas como binárias ou pondera
 Na Figura \ref{fig:grafo-exemplobinario} temos um grafo binário,  em que se \((u,v) \in E\), então ela está representada no grafo. Ná na Figura \ref{fig:grafo-exemploponderado} além da existência da conexão entre os vértices, está representado o valor da aresta no conjunto \(W\) informando o peso. 
 
 É chamado de grafo orientado quando \((u,v) \in E\) é diferente de \((v,u) \in E\). Neste caso, quando um vértice é ligado ao outro, não necessariamente esse segundo vértice é conectado ao primeiro, como um exemplo mostrado na Figura \ref{fig:grafo-exemploorientado}.
-\citet{grafosucinto} afirma sobre a vizinhança de um grafo que "O conjunto de vértices \(X\) de um grafo \(G\) é o conjunto de todos os vértices que tem algum vizinho em \(X\)", e diz que esse conjunto de vértices pode ser chamado de \(\Gamma_G(X)\). Exemplificando, o conjunto \(\Gamma_G(1)\) da Figura \ref{fig:grafo-exemplobinario} são os vértices \(2\) e \(4\) e a aresta \( (2,4) \) sendo representados na Figura \ref{fig:grafo-vizinhanca}.
+\citet{grafosucinto} afirmam sobre a vizinhança de um grafo que "O conjunto de vértices \(X\) de um grafo \(G\) é o conjunto de todos os vértices que tem algum vizinho em \(X\)", e diz que esse conjunto de vértices pode ser chamado de \(\Gamma_G(X)\). Exemplificando, o conjunto \(\Gamma_G(1)\) da Figura \ref{fig:grafo-exemplobinario} são os vértices \(2\) e \(4\) e a aresta \( (2,4) \) sendo representados na Figura \ref{fig:grafo-vizinhanca}.
 
 \begin{figure}[!h] \centering
 	\centering
@@ -98,23 +98,23 @@ Na Figura \ref{fig:grafo-exemplobinario} temos um grafo binário,  em que se \((
 
 \section{Propriedade topológicas}
 
-O grau de um vértice \(v\) é definido sendo a quantidade de arestas que chegam no vértice \(v\), sendo denotado por \(g(v)\). Continuando ainda no exemplo da Figura \ref{fig:grafo-exemplobinario} o \(g(1)\) é 2 pois apenas as arestas \((1,2)\) e \((1,4)\) incidem no vértice 1 \cite{grafosucinto}.
+O grau de um vértice \(v\),\(g(v)\), é definido sendo a quantidade de arestas que chegam nele. Por exemplo, na Figura \ref{fig:grafo-exemplobinario} vemos que o grau do vértice 1, \(g(1)\), é igual à 2, pois apenas as arestas \((1,2)\) e \((1,4)\) incidem no vértice 1 \cite{grafosucinto}.
 
-O grau máximo de um grafo \(G\) é o grau do vértice que tem o maior grau presente nesse grafo \(V(G)\), ou seja \(\Delta(G) = max\{g(v) : v \in V(G)\}\). E o grau mínimo de um grafo \(G\) é o grau do vértice com menor grau, \(\delta(G) = min\{g(v) : v \in V(G)\}\). E ainda, um grafo é regular se \(\delta(G) = \Delta(G)\) e é \(k\)-regular se \(\delta(G) = \Delta(G) = k\) \cite{grafosucinto}.
+O grau máximo de um grafo \(G\) é igual ao do vértice que tem o maior grau presente nesse grafo \(V(G)\), podendo ser expresso por \(\Delta(G) = max\{g(v) : v \in V(G)\}\). O grau mínimo de um grafo, por outro lado, é o grau do vértice com o qual poderíamos escrever por: \(\delta(G) = min\{g(v) : v \in V(G)\}\). um grafo é considerado regular caso \(\delta(G) = \Delta(G)\) e é \(k\)-regular se \(\delta(G) = \Delta(G) = k\) \cite{grafosucinto}.
 
 
-Quando modelamos um sistema real em forma de grafos vamos ver na seção seguinte que esse grafo recebe um nome especial, sendo chamado de rede complexa.
+Os grafos que são modelamos a partir de um sistema real são classificados como redes complexas, as quais veremos na seção seguinte.
 
 \section{Redes Complexas}
 \label{chap:redecomplexa}
-Ainda sobre grafos \citet{Viana2007} afirma que é utilizado o termo redes complexas quando um grafo representa um sistema físico real, então um grafo do jogo LOL pode ser considerado como uma rede complexa.
+\citet{Viana2007} afirma que é utilizado o termo redes complexas quando um grafo representa um sistema físico real e, por isso, um grafo do jogo LOL pode ser considerado como uma rede complexa.
 
-Para que seja possível classificar o nosso modelo adequadamente, serão apresentados três modelos que se destacam entre os pesquisadores segundo \citet{albert2002statistical}: As redes \textit{small-worlds}, as redes livres de escala e as redes aleatórias. E também será explicado sobre o coeficiente de aglomeração para melhor caracterização do modelo adquirido.
+Para que seja possível classificar o nosso modelo adequadamente, serão apresentados três modelos que, segundo \citet{albert2002statistical} destacam entre os pesquisadores as redes \textit{small-worlds}, as redes livres de escala e as redes aleatórias.
 
 \subsection{\textit{Redes Small-Worlds}}
- As redes \textit{small-worlds} são um modelo de rede complexas e este tipo de rede complexa representa uma alternativa ao modelo aleatório, assumindo como hipótese que redes complexas do mundo real presente no mundo animal, biológico e químico não são completamente aleatórias \cite{watts1998collective, lopes2011redes}. 
+ As redes \textit{small-worlds} são um modelo de rede complexas que representa uma alternativa ao modelo aleatório, assumindo como hipótese que redes complexas do mundo real presente no mundo animal, biológico e químico não são completamente aleatórias \cite{watts1998collective, lopes2011redes}. 
  
- Tendo um grafo regular com $v$ vértices e $k$ arestas ligando os vizinhos mais próximos, depois de formado o grafo cada aresta tem uma probabilidade $p$ de se reconectar com outro vértice aleatório. Permitindo que a geração do grafo seja controlado para uma rede regular com $p \approx 0$ ou uma rede aleatória com $p \approx 1$, e também permitindo uma rede com topologia intermediária $0 < p < 1$ \cite{lopes2011redes}.
+ Vamos supor que exista um grafo regular com $v$ vértices e $k$ arestas ligando os vizinhos mais próximos e, após de ser formado, cada uma de suas arestas têm uma probabilidade $p$ de se reconectar com outro vértice aleatório. Isto permite que a geração do grafo seja controlada para uma rede regular com $p \approx 0$ ou uma rede aleatória com $p \approx 1$, e, também, a formação de uma rede com topologia intermediária $0 < p < 1$ \cite{lopes2011redes}.
  \begin{figure}[!htb]
  	\caption{Variação do $p$ sem alterar o numero de vértices $v = 20$ e $k = 4$.}
  	\begin{center}
@@ -124,13 +124,14 @@ Para que seja possível classificar o nosso modelo adequadamente, serão apresen
  	\label{fig:watts-sm}
  \end{figure} 
  
- As redes \textit{small-worlds} são caracterizadas com duas principais medidas: O tamanho do caminho $L(p)$ e o coeficiente de agrupamento ou coeficiente de aglomeração $C(p)$. $L(p)$ é medido como a média do caminho mais curto de todos pares de vértices \cite{lopes2011redes}. O coeficiente de aglomeração será melhor definido na seção \ref{subsec:coeficienteaglomeracao}.
+ As redes \textit{small-worlds} são caracterizadas com duas principais medidas: o tamanho do caminho $L(p)$ e o coeficiente de agrupamento, ou coeficiente de aglomeração, $C(p)$. $L(p)$ é medido como a média do caminho mais curto de todos pares de vértices \cite{lopes2011redes}. O coeficiente de aglomeração será melhor definido na seção \ref{subsec:coeficienteaglomeracao}.
  
  \subsection{Redes Livres de Escala}
- As redes livres de escala, foram propostas por \citet{barabasi1999emergence}, nelas um nó tem a probabilidade \(P(k)\) de possuir \(k\) arestas obedecendo a lei da potência \(P(k) \sim k^{-\gamma}\), onde $\gamma$ determina o decaimento exponencial \cite{Antiqueira2005, lopes2011redes}. Segundo \citet{Viana2007} nas redes livres de escala muitos nós tem poucas arestas e poucos nós se ligam a muitos.
+ As redes livres de escala, foram propostas por \citet{barabasi1999emergence}, nelas nós possuem probabilidade \(P(k)\) de possuir \(k\) arestas obedecendo a lei da potência \(P(k) \sim k^{-\gamma}\), em que $\gamma$ determina o decaimento exponencial \cite{Antiqueira2005, lopes2011redes}. Segundo \citet{Viana2007}, nas redes livres de escala possuem muitos nós com poucas arestas e poucos nós que se ligam a muitos.
  
-A rede livre de escala é baseado em duas regras: crescimento e preferência linear de ligação. A redes é gerada com a inclusão de $n_0 < n$ vértices aleatoriamente conectados sendo estas inserções antes do crescimento da rede. Na etapa de crescimento da rede, a cada instante de tempo $t$ um novo vértice $v$ é adicionado na rede, o número de arestas desse vértice segue uma preferencia linear de ligação da fórmula:
-\[ P(v_i \leftrightarrow v_j) = \frac{k_j}{\sum_u k_U}, \forall v_u \in V \]
+A rede livre de escala é baseado em duas regras: crescimento e preferência linear de ligação. A redes é gerada com a inclusão de $n_0 < n$ vértices aleatoriamente conectados, sendo estas inserções antes do crescimento da rede. 
+Na etapa de crescimento da rede, um novo vértice $v$ é adicionado na rede a cada instante de tempo $t$, o número de arestas desse vértice segue uma preferencia linear de ligação da fórmula
+\[ P(v_i \leftrightarrow v_j) = \frac{k_j}{\sum_u k_U}, \forall v_u \in V .\]
 
 Sendo $P$ a probabilidade de um vértice $v_i$ ser conectado ao novo vértice $v_j$ é linearmente proporcional ao grau $k_j$ do vértice $v_j$  \citet{lopes2011redes}.
 
@@ -143,17 +144,17 @@ Sendo $P$ a probabilidade de um vértice $v_i$ ser conectado ao novo vértice $v
 	\label{fig:lei-potencia}
 \end{figure} 
  
-É possível ver na Figura \ref{fig:lei-potencia} que quanto maior o \(\gamma\) menos existem vértices com maior número de arestas. O paradigma de ligação dos novos vértices também é conhecido como "o rico fica mais rico" \cite{costa}.
+É possível ver na Figura \ref{fig:lei-potencia} que quanto maior o \(\gamma\), menor a probabilidade de existir vértices com grande número de arestas. O paradigma de ligação dos novos vértices também é conhecido como "o rico fica mais rico" \cite{costa}.
      
 \subsection{Redes Aleatórias}
 As redes aleatórias, foram inicialmente propostas em 1959 e podem ser consideradas o modelo mais elementar de rede complexas \cite{lopes2011redes, erdds1959random}.
-Segundo \citet{Viana2007} e \citet{lopes2011redes} as redes aleatórias são um sistema formado por $E$ arestas e $N$ vértices, inicialmente são dispostos os vértices, e depois aleatoriamente as arestas são distribuídas com probabilidade igual entre os vértices, evitando auto-relacionamentos e conexões múltiplas entre dois vértices.
+Segundo \citet{Viana2007} e \citet{lopes2011redes}, as redes aleatórias são um sistema formado por $E$ arestas e $N$ vértices que são dispostos inicialmente os vértices e depois aleatoriamente as arestas são distribuídas com probabilidade igual entre os vértices, evitando auto-relacionamentos e conexões múltiplas entre dois vértices.
 
 
  
 \subsection{Coeficiente de Aglomeração}
 \label{subsec:coeficienteaglomeracao}
-Segundo \citet{Viana2007} o coeficiente de aglomeração mede o quão conectado estão os nós da rede ou do grafo. \citet{Antiqueira2005}  define o coeficiente de aglomeração sendo:\[CA_i = \frac{E_i}{k_i(k_i-1)}\]
+Segundo \citet{Viana2007}, o coeficiente de aglomeração mede o quão conectado estão os nós da rede ou do grafo. \citet{Antiqueira2005}  definem o coeficiente de aglomeração sendo\[CA_i = \frac{E_i}{k_i(k_i-1)}.\]
 
 \citet{Antiqueira2005}  continua: “Sendo para cada vértice \(i\) existe \(k_i\) arestas, que os ligam a outros \(k_i\) vértices. Se esses \(k_i\) vértices estivessem ligados diretamente à todos os outros vértices do conjunto, haveriam \(k_i(k_i- 1)\) arestas entre eles. E assumindo \(E_i\) o número de arestas que existentes entre os \(k_i\) vértices.	O coeficiente da rede inteira é a média de todos \(CA_i\)”.
 
@@ -212,15 +213,16 @@ Segundo \citet{Viana2007} o coeficiente de aglomeração mede o quão conectado 
 	\label{fig:grafo-aglomeracao}
 \end{figure}
 
-Na Figura \ref{fig:grafo-aglomeracao1}, assumindo o peso de todas as arestas como 1, o coeficiente de aglomeração do vértice em azul é 1, já na Figura \ref{fig:grafo-aglomeracao2} o coeficiente do vértice em azul segundo a fórmula é $\frac{1}{2}$. 
+Na Figura \ref{fig:grafo-aglomeracao1}, tem-se que o peso de todas as arestas é 1 e, por isso, o coeficiente de aglomeração
+do vértice em azul é 1.  Já na Figura \ref{fig:grafo-aglomeracao2}, o coeficiente do vértice em azul, segundo a fórmula é $\frac{1}{2}$. 
     
 
 
 \section{\textit{League of Legends}}
 \label{chap:lol}
-O jogo \textit{League of Legends} é um jogo classificado como arena de batalha online de multi jogadores (do inglês \textit{Multiplayer Online Battle Arena} ) ou conhecido também como MOBA, que é um estilo de jogo onde duas equipes se enfrentam em um campo de batalha e cada jogador controla o seu personagem, mais chamado de herói ou campeão. O objetivo do MOBA é derrotar a equipe adversária destruindo a construção principal da equipe inimiga.
+O jogo \textit{League of Legends} é um jogo classificado como arena de batalha online de multi jogadores (do inglês \textit{Multiplayer Online Battle Arena} ) ou conhecido também como MOBA, que é um estilo de jogo em que duas equipes se enfrentam virtualmente em um campo de batalha e cada jogador controla o seu personagem, mais chamado de herói ou campeão. O objetivo do MOBA é derrotar a equipe adversária destruindo a construção principal da equipe inimiga.
 
-	A arena onde acontece o jogo é uma arena onde normalmente o mapa inicialmente é  espelhado,  ou  seja, o lado que cada time está não  oferece vantagens  exclusivas.  O mapa é composto  de  três caminhos até a base inimiga.
+A arena na qual acontece o jogo é uma arena onde, normalmente o mapa inicialmente é  espelhado,  ou  seja, o lado que cada time está não  oferece vantagens  exclusivas.  O mapa é composto  de  três caminhos até a base inimiga.
     
 %%preciso conferir se essa foto é acervo, ou é do lol
 
@@ -233,14 +235,13 @@ O jogo \textit{League of Legends} é um jogo classificado como arena de batalha 
 	\label{fig:mapa_lol}
 \end{figure}
 
-	A Figura \ref{fig:mapa_lol} mostra como é realmente o mapa do jogo, sendo que os círculos mostram a localização da construção principal, e os triângulos as construções de suporte de cada equipe, sendo azul uma equipe e vermelho a outra.
+A Figura \ref{fig:mapa_lol} mostra como é realmente o mapa do jogo, sendo que os círculos mostram a localização da construção principal, e os triângulos as construções de suporte de cada equipe, sendo azul uma equipe e vermelho a outra.
     
-	Com o início do jogo cada jogador escolhe  um  herói  diferente, onde  cada  herói tem um conjunto de características únicas, como habilidades especiais,  seu impacto  no jogo,  na equipe adversária e na equipe aliada.
+No início do jogo cada jogador escolhe  um  herói  diferente, em que  cada  herói tem um conjunto de características únicas, como habilidades especiais que causa uma influência individual no jogo e, indiretamente, na escolha e nos heróis dos outros jogadores, tanto na equipe aliada quanto na equipe inimiga.
     
-	Depois de escolher os heróis de cada equipe, cada jogador deve procurar adquirir recursos no jogo e objetivos para conseguir vantagens. Os recursos são limitados por equipe e por tempo, ou seja, deve ser bem escolhido quem ficará com a maior parte dos recursos da equipe.
-
+Depois de escolher os heróis de cada equipe, cada jogador deve procurar adquirir recursos no jogo e meios para conseguir vantagens. Os recursos são limitados por equipe e por tempo, por esse motivo, deve ser bem escolhido quem ficará com a maior parte dos recursos da equipe.
 \section{D3.js}
-A biblioteca D3.js é uma biblioteca em JavaScript especializada em dar vida aos dados. Segundo \citet[tradução do autor]{d3cook} "Em certo sentido, o D3 é uma biblioteca JavaScript especializada que permite criar incríveis visualizações de dados usando uma abordagem mais simples (baseada em dados), aproveitando os padrões da \textit{Web} existentes", e a organização oficial continua :
+A biblioteca D3.js é uma biblioteca em JavaScript especializada em deixar os dados fáceis de serem lidos e entendidos. Segundo \citet{d3cook}: "Em certo sentido, o D3 é uma biblioteca JavaScript especializada que permite criar incríveis visualizações de dados usando uma abordagem mais simples (baseada em dados), aproveitando os padrões da \textit{Web} existentes", e a organização oficial continua :
 
 
 \begin{quote}
@@ -249,20 +250,28 @@ A biblioteca D3.js é uma biblioteca em JavaScript especializada em dar vida aos
 \end{quote}
 
 
-Com essa biblioteca é possível dar vida à informações e dados, como por exemplo a Figura \ref{fig:d3} que possui duas das diversas maneiras de se exibir informações com o D3.js . E com o D3 foi gerado o grafo do \textit{web service}, programa este que será clarificado na seção seguinte.
+Com essa biblioteca é possível dar vida à informações e dados, como, por exemplo, a Figura \ref{fig:d3} que possui duas das diversas maneiras de se exibir informações com o D3.js . Com o D3, foi gerado o grafo do \textit{web service}, programa que será explorado na seção seguinte.
 
-\begin{figure}[H]
-	\caption{Exemplo de visualização de dados utilizando o D3.js.}
-	\begin{center}
-		\includegraphics[width=7.5cm]{imagens/d3_1.png}%
-		\hspace{1cm}% add some horizontal spacing
+\begin{figure}[!h] \centering
+	\centering
+	\caption{Coeficiente de aglomeração.}
+	\subfloat[]{
+		\includegraphics[width=7.5cm]{imagens/d3_1.png}
+	}
+	\subfloat[]{
 		\includegraphics[width=7.5cm]{imagens/d3_2.PNG}%
-	\end{center}
+	}
+	\
 	\small{Fonte: \cite{d3js}.}
 	\label{fig:d3}
 \end{figure}
 
+
 \section{Estado da Arte}
 
 
-{\Huge VOU REFAZER}
+\citet{fbclass} fizeram uma modelação de redes sociais, em que, dados eram adquiridos das redes sociais, e eram modelados em forma de rede complexa. Cada rede complexa depois, passa por processamento de informação, onde são retiradas medidas para estimar a "força" de uma amizade naquela rede social.
+
+\citet{backstrom2006group} também fizeram um trabalho com redes sociais, onde estudam as estruturas das redes sociais MySpace e LiveJournal, e mostraram que até homofilia pode ser usado para melhorar os modelos de predição em um grupo de pessoas.
+
+\citet{dota} com um tema de trabalho também sobre jogos MOBA, fizeram a aquisição de partidas de Dota 2, um jogo da Steam\footnote{https://store.steampowered.com/?l=portuguese}, onde modelam o posicionamento dos jogadores em uma batalha virtual em uma rede complexa, e predizem o vencedor daquela batalha, apenas pelo posicionamento dos jogados.
